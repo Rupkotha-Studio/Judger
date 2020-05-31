@@ -53,6 +53,9 @@
 				else $status = "RTE";
 			}
 			if($status == ""){
+				if($this->compileData['outputLimitExceeded'])$status = "OLE";
+			}
+			if($status == ""){
 				if($this->compileData['timeLimit'] < $this->compileData['time'])$status="TLE";
 			}
 			
@@ -85,7 +88,10 @@
     				break;	
     			case "RTE":
     				$this->returnData['status']['description'] = "Runtime Error";
-    				break;	
+    				break;
+    			case "OLE":
+    				$this->returnData['status']['description'] = "Output Limit Exceeded";
+    				break;		
   				default:
    			 		$this->returnData['status']['description'] = "Internal Error";
 			}
