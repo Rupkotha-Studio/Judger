@@ -1,11 +1,17 @@
 function submitCode(){
 		
+		var timeLimit = $("#timeLimit").val();
+		if(timeLimit==""){
+			alert("Enter Time Limit");
+			return;
+		}
+
 		var data1 = {
 			sourceCode: btoa($("#code").val()),
 			input: btoa($("#input").val()),
 			expectedOutput: btoa($("#expectedOutput").val()),
 			language: "CPP",
-			time : 2
+			time : $("#timeLimit").val()
 		}
 
 		var data = {};
@@ -14,7 +20,7 @@ function submitCode(){
 		$("#output").val("Loading......");
 		
 		$.post("api.php",data1,function(response){
-			//$("#outputResponse").html(response);
+			$("#debug").html(response);
 			response = JSON.parse(response);
 			
         	if(typeof response.error == 'undefined'){

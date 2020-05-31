@@ -96,7 +96,8 @@
 		}
 
 		public function makeProcessData(){
-			$this->processResultData['output'] = $this->output;
+			$len = $this->compailerError==1?0:filesize("output.txt");
+			$this->processResultData['output'] = $len<=10000000?$this->output:"";
 			$this->processResultData['expectedOutput'] = $this->expectedOutput;
 			$this->processResultData['time'] = $this->executionTotalTime;
 			$this->processResultData['timeLimit'] = $this->timeLimit;

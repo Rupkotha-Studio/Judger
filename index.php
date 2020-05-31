@@ -29,12 +29,14 @@
 				<textarea class="sourceEditor" id="code" placeholder="Source Code"></textarea><br/>
 				<textarea rows="4" class="inputEditor" id="input" placeholder="Input"></textarea>
 				<textarea rows="4" class="inputEditor" id="expectedOutput" placeholder="Expected Output"></textarea>
+				<input type="number" name="" id="timeLimit" value="2" placeholder="Time Limit">
 				<button onclick="submitCode()">Run</button>
 			</div>
 			<div class="col-md-5">
 				
 				<textarea rows="4" class="inputEditor1" id="output" placeholder="output" readonly></textarea>
 				<div id="outputResponse" style="margin-bottom: 10px;">Total Time: <br/>Status: </div>
+				<div id="debug" style="margin-bottom: 10px;"></div>
 			</div>
 		</div>
 	</div>
