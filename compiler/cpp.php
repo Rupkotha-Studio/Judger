@@ -87,22 +87,13 @@
 
 		public function runCode(){
 			if($this->compailerError==1)return;
-			//$out=trim($this->input)==""?$this->out:$this->out." < ".$this->inputFileName;
-			$out = $this->out." < ".$this->inputFileName." | head -c 4000000 > ".$this->outputFileName;
-			//[command] | tee -a [/filelocation/filename]
+			$out = $this->out." < ".$this->inputFileName." | head -c 8000000 > ".$this->outputFileName;
 			$this->executionStartTime = microtime(true);
-			//$this->output = shell_exec($out);
-			//make output file for overleap variable
-			//$this->makeFile($this->outputFileName,shell_exec($out));
-			//echo $out;
 			shell_exec($out);
-
 			$this->output = $this->readfile("output.txt");
 			$this->executionEndTime = microtime(true);
 			$this->executionTotalTime = $this->executionEndTime - $this->executionStartTime;
 			$this->executionTotalTime = sprintf('%0.3f', $this->executionTotalTime);
-
-			
 		}
 
 		public function readfile($path){
@@ -110,9 +101,9 @@
 			if($this->compailerError==1)return "";
 			$fsize = filesize($path);
 			//echo "$fsize";
-			if($fsize>=4000000){
+			if($fsize>=8000000){
 				$this->processResultData['outputLimitExceeded'] = 1;
-				return $fsize;
+				return "";
 			}
 			//$txt=$fsize;
 			$txt = file_get_contents($path);

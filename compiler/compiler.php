@@ -71,7 +71,7 @@
 			$this->returnData['output'] = base64_encode($this->compileData['output']);
 			$this->returnData['time'] = $this->compileData['time'];
 			$this->returnData['memory'] = $this->compileData['memory'];
-			$this->returnData['compileMessage'] = $this->compileData['compilerMessage'];
+			$this->returnData['compileMessage'] = base64_encode($this->compileData['compilerMessage']);
 			$this->returnData['status']['status'] = $status;
 			switch ($status) {
   				case "AC":
