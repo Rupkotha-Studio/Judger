@@ -53,11 +53,13 @@
 				else $status = "RTE";
 			}
 			if($status == ""){
-				if(trim($this->compileData['output']) == "")$status="RTE";
-			}
-			if($status == ""){
 				if($this->compileData['timeLimit'] < $this->compileData['time'])$status="TLE";
 			}
+			
+			if($status == ""){
+				if(trim($this->compileData['output']) == "")$status="RTE";
+			}
+			
 			
 			if($status == ""){
 				$status = $this->compareOutput()?"AC":"WA";
