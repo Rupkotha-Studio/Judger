@@ -86,8 +86,9 @@
 			if($this->compailerError==1)return;
 			$out=trim($this->input)==""?$this->out:$this->out." < ".$this->inputFileName;
 			$this->executionStartTime = microtime(true);
-			$this->output=shell_exec($out);
-			$this->makeFile($this->outputFileName,$this->output);
+			//$this->output = shell_exec($out);
+			$this->makeFile($this->outputFileName,shell_exec($out));
+			$this->output = $this->readfile("output.txt");
 			$this->executionEndTime = microtime(true);
 			$this->executionTotalTime = $this->executionEndTime - $this->executionStartTime;
 			$this->executionTotalTime = sprintf('%0.3f', $this->executionTotalTime);
@@ -95,9 +96,20 @@
 			
 		}
 
+		public function readfile($path){
+			if($this->compailerError==1)return "";
+			$fsize = filesize("output.txt");
+			if($fsize>=2000000)return "";
+			//$txt=$fsize;
+			$txt = file_get_contents($path);
+			return $txt;
+			
+		}
+
 		public function makeProcessData(){
-			$len = $this->compailerError==1?0:filesize("output.txt");
-			$this->processResultData['output'] = $len<=10000000?$this->output:"";
+			//$len = $this->compailerError==1?0:filesize("output.txt");
+			//$this->processResultData['output'] = $len<=1000000?$this->output:"";
+			$this->processResultData['output'] = $this->output;
 			$this->processResultData['expectedOutput'] = $this->expectedOutput;
 			$this->processResultData['time'] = $this->executionTotalTime;
 			$this->processResultData['timeLimit'] = $this->timeLimit;

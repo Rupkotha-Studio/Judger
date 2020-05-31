@@ -11,7 +11,7 @@ function submitCode(){
 			input: btoa($("#input").val()),
 			expectedOutput: btoa($("#expectedOutput").val()),
 			language: "CPP",
-			time : $("#timeLimit").val()
+			timeLimit : $("#timeLimit").val()
 		}
 
 		var data = {};

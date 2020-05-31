@@ -21,7 +21,11 @@
 		$data['expectedOutput']=base64_decode($_POST['expectedOutput']);
 		$data['timeLimit']=isset($_POST['timeLimit'])?$_POST['timeLimit']:2;
 		$data['language']=$_POST['language'];
-		
+
+		$data['timeLimit'] = min($data['timeLimit'],5);
+		if(trim($data['input'])=="")$data['timeLimit']=1;//for infinite loop problem
+
+
 		include "compiler/compiler.php";
 		include "compiler/cpp.php";
 		$CompilerEnjin = new CompilerEnjin($data);
