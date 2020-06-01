@@ -68,7 +68,10 @@
 				$status = $this->compareOutput()?"AC":"WA";
 			}
 
-			$this->returnData['output'] = base64_encode($this->compileData['output']);
+			$len = strlen($this->compileData['output']);
+			$outputVal = ($len>3000)?"Output Is Large":$this->compileData['output'];
+
+			$this->returnData['output'] =base64_encode($outputVal);
 			$this->returnData['time'] = $this->compileData['time'];
 			$this->returnData['memory'] = $this->compileData['memory'];
 			$this->returnData['compileMessage'] = base64_encode($this->compileData['compilerMessage']);
