@@ -8,13 +8,14 @@
 	
 
 	$response = array();
+	$apiCallStartTime = microtime(true);
 
 	if($ok==0){
 		$response['error'] = "all parameter are not correct.";
 	}
 
 	else{
-
+		
 		$data = array();
 		$data['sourceCode']=base64_decode($_POST['sourceCode']);
 		$data['input']=isset($_POST['input'])?base64_decode($_POST['input']):"";
@@ -29,8 +30,11 @@
 		$CompilerEnjin = new CompilerEnjin($data);
 		$CompilerEnjin->compile();
 		$response = $CompilerEnjin->getData();
+		
 	}
-
+	$apiCallEndTime = microtime(true);
+	$apiCallTime = $apiCallEndTime - $apiCallStartTime;
+	$response['apiCallTime']= sprintf('%0.3f', $apiCallTime);
 	$response = json_encode($response,true);
 	echo "$response";
 

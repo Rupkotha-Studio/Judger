@@ -25,7 +25,7 @@ function submitCode(){
 			
         	if(typeof response.error == 'undefined'){
      
-        		if(response.status.status=="CE" || response.status.status=="RTE")$("#output").val(response.compileMessage);
+        		if(response.status.status=="CE" || response.status.status=="RTE")$("#output").val(atob(response.compileMessage));
         		else $("#output").val(atob(response.output));
         		
         		$("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description);

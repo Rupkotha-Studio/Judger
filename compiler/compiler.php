@@ -6,11 +6,39 @@
 		public $compileData;
 		public $returnData = array();
 		public $languageError = 0;
+		public $maxOutputFileSize = 5000000;
 
 		function __construct($data){
 			$this->apiData = $data;
 			$this->setCompiler();
+
 		}
+
+		function makeMergeFile(){
+			$this->makeFile("output.txt");
+			$this->makeFile("input.txt",$this->apiData['input']);
+			$this->makeFile("expectedOutput.txt",$this->apiData['expectedOutput']);
+			$this->makeFile("compare.txt");
+		}
+
+		public function makeFile($fileName,$fileVal=""){
+			$filePath = $fileName;
+			$file=fopen($filePath,"w+");
+			fwrite($file,$fileVal);
+			fclose($file);
+			$this->setPermissionFile($filePath);
+		}
+
+		public function setPermissionFile($fileName){
+			exec("chmod -R 777".$fileName);
+		}
+
+
+		public function removeMergeFile(){
+			exec("rm *.txt");
+		}
+
+
 		
 		public function setCompiler(){
 			switch ($this->apiData['language']) {
@@ -36,9 +64,12 @@
 				$this->returnData['error'] = "language is not support";
 				return;
 			}
+
+			$this->makeMergeFile();
 			$this->Compiler->setData($this->apiData);
 			$this->compileData = $this->Compiler->execute();
 			$this->processData();
+			$this->removeMergeFile();
 		}
 
 		public function getData(){
@@ -48,28 +79,32 @@
 		public function processData(){
 			$compilerMessage = $this->compileData['compilerMessage'];
 			$status = "";
+			$this->compileData['outputLimitExceeded'] = 0;
+			
 			if(trim($compilerMessage)!=""){
 				if(strpos($compilerMessage,"error"))$status = "CE";
 				else $status = "RTE";
 			}
+			
 			if($status == ""){
-				if($this->compileData['outputLimitExceeded'])$status = "OLE";
+				if($this->apiData['timeLimit'] < $this->compileData['time'])$status="TLE";
 			}
+
+			$outputFilesize = filesize("output.txt");
+
 			if($status == ""){
-				if($this->compileData['timeLimit'] < $this->compileData['time'])$status="TLE";
+				if($outputFilesize>=$this->maxOutputFileSize)$status = "OLE";
 			}
 			
 			if($status == ""){
-				if(trim($this->compileData['output']) == "")$status="RTE";
+				if($outputFilesize == 0)$status="RTE";
 			}
-			
-			
+				
 			if($status == ""){
 				$status = $this->compareOutput()?"AC":"WA";
 			}
 
-			$len = strlen($this->compileData['output']);
-			$outputVal = ($len>3000)?"Output Is Large":$this->compileData['output'];
+			$outputVal = ($outputFilesize>3000)?"Output Is Large":file_get_contents("output.txt");
 
 			$this->returnData['output'] =base64_encode($outputVal);
 			$this->returnData['time'] = $this->compileData['time'];
@@ -101,34 +136,19 @@
 		}
 
 		public function compareOutput(){
-			$output = $this->compileData['output'];
-			$exOutput = $this->compileData['expectedOutput'];
-
-			$output = $this->processString($output,"\n");
-			$exOutput = $this->processString($exOutput,"\n");
-
-			$outputLst = explode("\n", $output);
-			$exOutputLst = explode("\n", $exOutput);
-
-			foreach ($outputLst as $key => $value) {
-				$outputLst[$key]=$this->processString($value);
-			}
-
-			foreach ($exOutputLst as $key => $value) {
-				$exOutputLst[$key]=$this->processString($value);
-			}
-
-			return $outputLst==$exOutputLst;
+			
+			$this->trimFile("output.txt");
+			$this->trimFile("expectedOutput.txt");
+			shell_exec("diff output.txt expectedOutput.txt > compare.txt");
+			$compareFilesize = filesize("compare.txt");
+			return $compareFilesize>0?0:1;
 		}
 
-		public function processString($st,$char=" "){
-			$lstChar = substr($st, -1);
-			if($lstChar==$char)return $this->removeLastChar($st);
-			return $st;
-		}
+		public function trimFile($fileName){
+			$ret = shell_exec('perl -pi -e "s/\n$// if(eof)" '.$fileName.' && perl -pi -e "s/ $//" '.$fileName);
+			//-perl -pi -e "s/\n$// if(eof)" in.txt && perl -pi -e "s/ $//" output.txt
+			//this command for delete last empty line and every line last space
 
-		public function removeLastChar($st){
-			return substr($st, 0, -1);
 		}
 
 
