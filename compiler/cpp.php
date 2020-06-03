@@ -1,50 +1,57 @@
 <?php
 	class CPP{
 		
-		var $compilerName = "g++";
-		var $sourceCodeFileName = "main.cpp";
-		var $inputFileName = "input.txt";
-		var $expectedOutputFileName = "expected_output.txt";
-		var $outputFileName = "output.txt";
-		var $errorFileName = "error.txt";
-
-		var $executableFile;
-		var $compileCommand;	
-		var $commandError;
-
-		var $sourceCode;
-		var $input;
-		var $expectedOutput;
-		var $output;
-		var $timeLimit;
-		var $out;
-
+		public $compilerName = "g++";
+		public $sourceCodeFileName = "main.cpp";
+		public $inputFileName = "input.txt";
+		public $expectedOutputFileName = "expected_output.txt";
+		public $outputFileName = "output.txt";
+		public $errorFileName = "error.txt";
+		public $executableFile = "a.out";
 		
-		var $executionStartTime = 0;
-		var $executionEndTime = 0;
-		var $executionTotalTime = 0;
+		public $compileCommand;	
+		public $commandError;
 
-		var $compailerError = 0;
-		var $runTimeError = 0;
+		public $sourceCode;
+		public $out;
 
-		var $processResultData = array();
+		public $executionTotalTime = 0;
+
+		public $compailerError = 0;
+		public $runTimeError = 0;
+
+		public $processResultData = array();
 
 		function __construct(){
 			
-
 		}
 
 		public function setData($data){
+			
 			$this->sourceCode = $data['sourceCode'];
-			$this->input = $data['input'];
-			$this->expectedOutput = $data['expectedOutput'];
-			$this->timeLimit = $data['timeLimit'];
-			$exeTimeLimit = $this->timeLimit + 0.3;
-			$this->out = "timeout ".$exeTimeLimit."s ./a.out";
+			
+			$this->setCompiler($data['language']);
+			//g++ -lm main.cpp
+			$this->compileCommand = $this->compilerName." -lm ".$this->sourceCodeFileName;
 
-			$this->executableFile = "a.out";
-			$this->compileCommand = $this->compilerName." -lm ".$this->sourceCodeFileName;//g++ -lm main.cpp	
-			$this->commandError=$this->compileCommand." 2>".$this->errorFileName;//g++ -lm main.cpp 2> error.txt
+			//g++ -lm main.cpp 2> error.txt
+			$this->commandError=$this->compileCommand." 2>".$this->errorFileName;
+
+			$maximumTime = $data['timeLimit'] + 0.3;
+			$this->out = "timeout ".$maximumTime."s ./a.out";
+		}
+
+		public function setCompiler($languageName){
+
+			if($languageName == "CPP11"){
+				//g++ --std=c++11 c++14.cpp
+				$this->compilerName = "g++ --std=c++11";
+			}
+			if($languageName == "C"){
+				//gcc main.c
+				$this->compilerName = "gcc";
+				$this->sourceCodeFileName = "main.c";
+			}
 		}
 
 		public function execute(){
@@ -52,21 +59,15 @@
 			$this->setPermissionFile();
 			$this->compileCode();
 			
-			
 			//$debugStartTime = microtime(true);
 			$this->checkCompailerError();
-			
 			//$debugEndTime = microtime(true);
 			//$totalDebugTime = sprintf('%0.3f', $debugEndTime-$debugStartTime);
 			//echo "$totalDebugTime";
 			
 			$this->runCode();
 			$this->makeProcessData();
-			
 			$this->removeAllProcessFile();
-
-
-			
 
 			return $this->processResultData;
 		}
@@ -75,9 +76,7 @@
 			$this->makeFile($this->sourceCodeFileName,$this->sourceCode);
 			$this->makeFile($this->errorFileName);
 		}
-
 		
-
 		public function compileCode(){
 			shell_exec($this->commandError);
 		}
@@ -85,26 +84,22 @@
 		public function checkCompailerError(){
 			$error=file_get_contents($this->errorFileName);
 			$this->processResultData['compilerMessage'] = $error;
-			if(trim($error)!=""){
-				if(strpos($error,"error"))$this->compailerError = 1;
-				else $this->runTimeError = 1;
-			}
 		}
 
 		public function runCode(){
-			if($this->compailerError==1)return;
+			if(trim($this->processResultData['compilerMessage'])!="")return;
+			//head means maximum output file size 5000000 if code is infinite write but output not write infinite
 			$out = $this->out." < ".$this->inputFileName." | head -c 5000000 > ".$this->outputFileName;
-			$this->executionStartTime = microtime(true);
+			
+			$executionStartTime = microtime(true);
 			shell_exec($out);
-			$this->executionEndTime = microtime(true);
-			$this->executionTotalTime = $this->executionEndTime - $this->executionStartTime;
-			$this->executionTotalTime = sprintf('%0.3f', $this->executionTotalTime);
+			$executionEndTime = microtime(true);
+
+			$this->executionTotalTime = sprintf('%0.3f', $executionEndTime - $executionStartTime);
 		}
 
 
 		public function makeProcessData(){
-			//$len = $this->compailerError==1?0:filesize("output.txt");
-			//$this->processResultData['output'] = $len<=1000000?$this->output:"";
 			$this->processResultData['time'] = $this->executionTotalTime;
 			$this->processResultData['memory'] = 0;
 		}

@@ -11,7 +11,6 @@
 		function __construct($data){
 			$this->apiData = $data;
 			$this->setCompiler();
-
 		}
 
 		function makeMergeFile(){
@@ -37,20 +36,18 @@
 		public function removeMergeFile(){
 			exec("rm *.txt");
 		}
-
-
 		
 		public function setCompiler(){
 			switch ($this->apiData['language']) {
-  				//case "C":
-    			//	$this->Compiler = new C();
-    			//	break;
+  				case "C":
+    				$this->Compiler = new CPP();
+    				break;
   				case "CPP":
     				$this->Compiler = new CPP();
     				break;
-  				//case "CPP11":
-   			 	//	$this->Compiler = new CPP11();
-   			 	//	break;
+  				case "CPP11":
+   			 		$this->Compiler = new CPP();
+   			 		break;
    			 	//case "JAVA":
    			 	//	$this->Compiler = new JAVA();
    			 	//	break;	

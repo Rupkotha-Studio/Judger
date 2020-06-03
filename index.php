@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="http://coderoj.com/style/lib/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script type="text/javascript" src="http://coderoj.com/style/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+
 
 
 <!DOCTYPE html>
@@ -26,6 +26,11 @@
 			</div>
 			
 			<div class="col-md-7" style="text-align: center;">
+				<select onchange="changeLanguage()" id="language" class="form-control selectLanguage">
+					<option value="C">C</option>
+					<option value="CPP">C++</option>
+					<option value="CPP11" selected="">C++11</option>
+				</select>
 				<textarea class="sourceEditor" id="code" placeholder="Source Code"></textarea><br/>
 				<textarea rows="4" class="inputEditor" id="input" placeholder="Input"></textarea>
 				<textarea rows="4" class="inputEditor" id="expectedOutput" placeholder="Expected Output"></textarea>
@@ -43,3 +48,5 @@
 	
 </body>
 </html>
+
+<script type="text/javascript" src="js/script.js"></script>
