@@ -1,5 +1,5 @@
 <?php
-	class CompilerEnjin{
+	class SandBox{
 		
 		public $Compiler;
 		public $apiData;
