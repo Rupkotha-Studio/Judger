@@ -1,8 +1,8 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
 
-	include "compiler/sandBox.php";
-	include "compiler/cpp.php";
+	include "compiler_script/sandBox.php";
+	include "compiler_script/cpp.php";
 	include "api_script/api.php";
 	
 	$Api = new Api($_POST);
