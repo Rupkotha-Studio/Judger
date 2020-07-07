@@ -45,6 +45,14 @@
 			</div>
 		</div>
 	</div>
+	<div class="version">
+		<?php 
+			$infoData = json_decode(file_get_contents("info.json"),true);
+			$version = $infoData['version'];
+			echo "Compiler Version: $version";
+		?>
+
+	</div>
 	
 </body>
 </html>
