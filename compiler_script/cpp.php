@@ -38,7 +38,7 @@
 			$this->commandError=$this->compileCommand." 2>".$this->errorFileName;
 
 			$maximumTime = $data['timeLimit'] + 0.3;
-			$this->out = "env time -v timeout ".$maximumTime."s ./a.out";
+			$this->out = "timeout ".$maximumTime."s ./a.out";
 		}
 
 		public function setCompiler($languageName){
@@ -89,13 +89,10 @@
 		public function runCode(){
 			if(trim($this->processResultData['compilerMessage'])!="")return;
 			//head means maximum output file size 5000000 if code is infinite write but output not write infinite
-			//shell command: "env time -v timeout 1s ./a.out < input.txt | head -c 5000000 > output.txt"
 			$out = $this->out." < ".$this->inputFileName." | head -c 5000000 > ".$this->outputFileName;
 			
 			$executionStartTime = microtime(true);
-			$output = shell_exec($out);
-			//$output = shell_exec("env time -v timeout 1s ./a.out");
-			//echo "$output";
+			shell_exec($out);
 			$executionEndTime = microtime(true);
 
 			$this->executionTotalTime = sprintf('%0.3f', $executionEndTime - $executionStartTime);
@@ -105,32 +102,6 @@
 		public function makeProcessData(){
 			$this->processResultData['time'] = $this->executionTotalTime;
 			$this->processResultData['memory'] = 0;
-			if(trim($this->processResultData['compilerMessage'])!="")return;
-			$outputFilesize = filesize("output.txt");
-			if($outputFilesize<5000000){
-				$cmd= $this->out;
-				//$cmd="env time -v timeout 1s ./a.out";
-				//$out =$cmd." 2>&1 < ".$this->inputFileName." > ".$this->outputFileName;
-				//$output = shell_exec($out);
-				//echo "<pre>$output</pre>";
-				//$this->getMemoryLimit($output);
-			}
-		}
-
-		public function getMemoryLimit($output){
-			$lineLst=explode(':', $output);
-			echo '<textarea>'.$output.'</textarea>';
-			foreach ($lineLst as $key => $value) {
-				$ex = array();
-				$ex=explode(':', $value);
-				echo "<pre>";
-				print_r($lineLst);
-				echo "</pre>";
-				if($ex[0]=="Maximum resident set size (kbytes)"){
-					echo $ex[1];
-				}
-			}
-			//print_r($lineLst);
 		}
 
 
