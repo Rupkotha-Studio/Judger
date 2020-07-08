@@ -82,15 +82,15 @@
 				if(strpos($compilerMessage,"error"))$status = "CE";
 				else $status = "RTE";
 			}
-			
-			if($status == ""){
-				if($this->apiData['timeLimit'] < $this->compileData['time'])$status="TLE";
-			}
 
 			$outputFilesize = filesize("output.txt");
 
 			if($status == ""){
 				if($outputFilesize>=$this->maxOutputFileSize)$status = "OLE";
+			}
+			
+			if($status == ""){
+				if($this->apiData['timeLimit'] < $this->compileData['time'])$status="TLE";
 			}
 			
 			if($status == ""){
