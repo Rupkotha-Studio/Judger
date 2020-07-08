@@ -44,7 +44,6 @@
 		}
 
 		public function removeBusy(){
-			if(!empty($this->apiError))return;
 			exec("rm ".$this->busyFileName);
 		}
 
@@ -53,10 +52,10 @@
 			if(!isset($this->apiData['sourceCode'])){
 				array_push($this->apiError, "Source Code Can Not Be Empty");
 			}
-			if(!isset($this->apiData['language'])){
+			else if(!isset($this->apiData['language'])){
 				array_push($this->apiError, "Language Not Selected");
 			}
-			if(!isset($this->apiData['expectedOutput'])){
+			else if(!isset($this->apiData['expectedOutput'])){
 				array_push($this->apiError, "Expected Output Is Empty");
 			}
 		}

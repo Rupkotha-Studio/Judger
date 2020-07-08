@@ -1,4 +1,6 @@
 <?php 
+	header('Access-Control-Allow-Origin: *');
+
 	function getJsonData($url){
 		return json_decode(file_get_contents($url),true);
 	}
