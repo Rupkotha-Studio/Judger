@@ -9,6 +9,7 @@
 		public $compileData = array();
 		public $returnData;
 		public $apiStartTime;
+		public $createBusyFlag = 0;
 
 		function __construct($data){
 			$this->apiId = uniqid();
@@ -37,6 +38,7 @@
 
 		public function createBusy(){
 			if(!empty($this->apiError))return;
+			$this->createBusyFlag = 1;
 			$file=fopen($this->busyFileName,"w+");
 			fwrite($file,$this->apiId);
 			fclose($file);
@@ -44,6 +46,7 @@
 		}
 
 		public function removeBusy(){
+			if(!$this->createBusyFlag)return;
 			exec("rm ".$this->busyFileName);
 		}
 
