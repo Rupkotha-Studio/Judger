@@ -30,7 +30,11 @@
 				<div class="topTitleArea">
 					<div class="topTitle">
 						CoderOJ
-						<span class="topSubTitle">Compiler<span class="pull-right"><button onclick="updateVersion()" id="updateVersionBtn">Update Version <?php echo $githubData['version']; ?></button></span></span>
+						<span class="topSubTitle">Compiler
+							<?php if($version!=$githubData['version']){ ?>
+							<span class="pull-right"><button onclick="updateVersion()" id="updateVersionBtn">Update Version <?php echo $githubData['version']; ?></button></span>
+							<?php } ?>
+						</span>
 						
 					</div>
 				</div>
