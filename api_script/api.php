@@ -12,7 +12,7 @@
 		public $createBusyFlag = 0;
 
 		function __construct($data){
-			$this->apiId = uniqid();
+			$this->apiId = rand();
 			$this->apiData = $data;
 			$this->apiStartTime = microtime(true);
 		}
