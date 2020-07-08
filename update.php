@@ -14,7 +14,7 @@
 		echo "Current Version and Github Master Version Is Same";
 		return;
 	}
-
+	
 	exec("rm -r *");
 	$fileName = $githubData['name'];
 	shell_exec("git clone ".$githubData['github-url']);

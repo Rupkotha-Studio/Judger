@@ -1,6 +1,23 @@
 $(document).ready(function() {
+    setCodeEditor();
     changeLanguage();
 });
+
+var sourceCodeEditor;
+
+
+function updateVersion(){
+
+    var data = {
+        'updateVersion' : 1
+    }
+    $("#updateVersionBtn").html("Updating...");
+    $("#updateVersionBtn").prop("disabled",true);
+    $.post("ajax_request.php", data, function(response) {
+        alert(response);
+        location.reload();
+    });
+}
 
 function submitCode() {
 
@@ -11,7 +28,7 @@ function submitCode() {
     }
 
     var data1 = {
-        sourceCode: btoa($("#code").val()),
+        sourceCode: btoa(sourceCodeEditor.getValue()),
         input: btoa($("#input").val()),
         expectedOutput: btoa($("#expectedOutput").val()),
         language: $("#language").val(),
@@ -21,12 +38,14 @@ function submitCode() {
     var data = {};
     data['createSubmission'] = data1;
 
-    $("#output").val("Loading......");
+    $("#runBtn").html("Running...");
+    $("#runBtn").prop("disabled",true);
 
     $.post("api.php", data1, function(response) {
         $("#debug").html(response);
         response = JSON.parse(response);
-
+        $("#runBtn").html("Run");
+        $("#runBtn").prop("disabled",false);
         if (typeof response.error == 'undefined') {
 
             if (response.status.status == "CE" || response.status.status == "RTE") $("#output").val(atob(response.compileMessage));
@@ -34,7 +53,18 @@ function submitCode() {
 
             $("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description);
         } else $("#outputResponse").html(response.errorMsg);
+        
     });
+}
+
+function setCodeEditor(){
+    sourceCodeEditor = ace.edit("code");
+    sourceCodeEditor.setShowPrintMargin(false);
+    sourceCodeEditor.setOption("maxLines", 37);                    
+    sourceCodeEditor.setOption("minLines", 37);                    
+    sourceCodeEditor.setReadOnly(false);
+    sourceCodeEditor.setFontSize("14px");
+
 }
 
 function changeLanguage() {
@@ -46,6 +76,30 @@ function changeLanguage() {
     if (language == "JAVA") editorCode = javaTestSource;
 
     $("#code").val(editorCode);
+    sourceCodeEditor.setValue(editorCode);
+    sourceCodeEditor.clearSelection();
+    setEditorSelectLanguage(language);
+}
+
+function setEditorSelectLanguage(selectLanguage){
+    if (selectLanguage.startsWith("C")) {
+        sourceCodeEditor.getSession().setMode("ace/mode/c_cpp");
+    }
+    else if (selectLanguage.startsWith("CPP")) {
+        sourceCodeEditor.getSession().setMode("ace/mode/c_cpp");
+    }
+    else if (selectLanguage.startsWith("JAVA")) {
+       sourceCodeEditor.getSession().setMode("ace/mode/java");
+    }
+    else if (selectLanguage.startsWith("PY")) {
+        sourceCodeEditor.getSession().setMode("ace/mode/python");
+    }
+    else if (selectLanguage.startsWith("RUST")) {
+        sourceCodeEditor.getSession().setMode("ace/mode/rust");
+    }
+    else if (selectLanguage.startsWith("D")) {
+        sourceCodeEditor.getSession().setMode("ace/mode/d");
+    }
 }
 
 // Template Sources
@@ -61,10 +115,10 @@ int main(void) {\n\
 
 
 var cppSource = "\
-#include <iostream>\n\
+#include <bits/stdc++.h>\nusing namespace std;\n\
 \n\
 int main() {\n\
-    std::cout << \"hello, world\" << std::endl;\n\
+    cout << \"hello, world\" << endl;\n\
     return 0;\n\
 }\n\
 ";
