@@ -6,6 +6,21 @@ $(document).ready(function() {
 var sourceCodeEditor;
 
 
+function checkNeedUpdate(){
+    
+    $.get(gitInfoUrl, "", function(response) {
+       response = JSON.parse(response);
+       githubVersion = response.version;
+       if(githubVersion != currentVersion){
+        $("#versionBtnArea").show();
+        $("#updateVersionBtn").html("Update New Version "+githubVersion);
+       }
+       
+    });
+}
+
+setTimeout(function(){ checkNeedUpdate(); }, 3000);
+
 function updateVersion(){
 
     var data = {
@@ -101,6 +116,8 @@ function setEditorSelectLanguage(selectLanguage){
         sourceCodeEditor.getSession().setMode("ace/mode/d");
     }
 }
+
+
 
 // Template Sources
 

@@ -13,9 +13,13 @@
 
 <?php 
 	$infoData = json_decode(file_get_contents("info.json"),true);
-	$version = $infoData['version'];
-	$githubData = json_decode(file_get_contents($infoData['github-info-file']),true);		
+	$version = $infoData['version'];	
 ?>
+
+<script type="text/javascript">
+	var gitInfoUrl = "<?php echo $infoData['github-info-file']; ?>";
+	var currentVersion = "<?php echo $version; ?>";
+</script>
 
 <!DOCTYPE html>
 <html>
@@ -31,9 +35,7 @@
 					<div class="topTitle">
 						CoderOJ
 						<span class="topSubTitle">Compiler
-							<?php if($version!=$githubData['version']){ ?>
-							<span class="pull-right"><button onclick="updateVersion()" id="updateVersionBtn">Update Version <?php echo $githubData['version']; ?></button></span>
-							<?php } ?>
+							<span class="pull-right" id="versionBtnArea" style="display: none"><button onclick="updateVersion()" id="updateVersionBtn"></button></span>
 						</span>
 						
 					</div>
