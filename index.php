@@ -77,9 +77,8 @@
 		</div>
 		<div class="col-md-12">
 			<div class="footer">
-		<?php echo "Compiler Version: $version"; ?>
-
-	</div>
+				<?php echo "Compiler Version: $version"; ?>
+			</div>
 		</div>
 	</div>
 	

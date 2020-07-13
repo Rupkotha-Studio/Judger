@@ -1,7 +1,7 @@
 <?php
 	header('Access-Control-Allow-Origin: *');
 
-	include "compiler_script/sandBox.php";
+	include "compiler_script/sand_box.php";
 	include "compiler_script/cpp.php";
 	include "api_script/api.php";
 	

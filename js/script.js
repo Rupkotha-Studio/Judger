@@ -57,19 +57,23 @@ function submitCode() {
     $("#runBtn").prop("disabled",true);
 
     $.post("api.php", data1, function(response) {
-        $("#debug").html(response);
-        response = JSON.parse(response);
-        $("#runBtn").html("Run");
-        $("#runBtn").prop("disabled",false);
-        if (typeof response.error == 'undefined') {
-
-            if (response.status.status == "CE" || response.status.status == "RTE") $("#output").val(atob(response.compileMessage));
-            else $("#output").val(atob(response.output));
-
-            $("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description);
-        } else $("#outputResponse").html(response.errorMsg);
-        
+        processApiResponseData(response);
     });
+}
+
+function processApiResponseData(response){
+    $("#runBtn").html("Run");
+    $("#runBtn").prop("disabled",false);
+    $("#debug").html(response);
+    response = JSON.parse(response);
+    if (typeof response.error == 'undefined') {
+        if (response.status.status == "CE" || response.status.status == "RTE") $("#output").val(atob(response.compileMessage));
+        else $("#output").val(atob(response.output));
+        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description);
+    } 
+    else $("#outputResponse").html(response.errorMsg);
+    
+        
 }
 
 function setCodeEditor(){
