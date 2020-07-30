@@ -22,14 +22,7 @@ class CPP
      *
      * @var array
      */
-    protected $file = [
-        'sourceCodeFileName'     => "main.cpp",
-        'inputFileName'          => "input.txt",
-        'expectedOutputFileName' => "expected_output.txt",
-        'outputFileName'         => "output.txt",
-        'errorFileName'          => "error.txt",
-        'executableFile'         => "a.out",
-    ];
+    protected $file;
 
     /**
      * Process Result Array.
@@ -40,6 +33,17 @@ class CPP
         'time'   => 0,
         'memory' => 0,
     ];
+
+    public function __construct()
+    {
+
+        global $file;
+        $this->file = $file;
+        foreach ($this->file as $key => $value) {
+            $this->file[$key] = "temp/" . $value;
+        }
+
+    }
 
     /**
      * Set code data and compiler
@@ -90,10 +94,14 @@ class CPP
 
         if ($languageName == "CPP11") {
             $this->compilerName = "g++ --std=c++11";
+            $this->file['sourceCode'] = $this->file['cppFile'];
         }
         if ($languageName == "C") {
             $this->compilerName               = "gcc";
-            $this->file['sourceCodeFileName'] = "main.c";
+            $this->file['sourceCode'] = $this->file['cFile'];
+        }
+        if($languageName == "CPP"){
+            $this->file['sourceCode'] = $this->file['cppFile'];
         }
     }
 
@@ -123,8 +131,8 @@ class CPP
      */
     public function prepareFile()
     {
-        $this->makeFile($this->file['sourceCodeFileName'], $this->compilerData['sourceCode']);
-        $this->makeFile($this->file['errorFileName']);
+        $this->makeFile($this->file['sourceCode'], $this->compilerData['sourceCode']);
+        $this->makeFile($this->file['error']);
     }
 
     /**
@@ -134,9 +142,9 @@ class CPP
      */
     public function setPermissionFile()
     {
-        exec("chmod -R 777 " . $this->file['sourceCodeFileName']);
-        exec("chmod 777 " . $this->file['errorFileName']);
-        exec("chmod -R 777 " . $this->file['executableFile']);
+        //exec("chmod -R 777 " . $this->file['sourceCodeFileName']);
+       // exec("chmod 777 " . $this->file['errorFileName']);
+        //exec("chmod -R 777 " . $this->file['executableFile']);
     }
 
     /**
@@ -162,14 +170,14 @@ class CPP
          */
 
         $compilerName = $this->compilerName;
-        $sourceFile   = $this->file['sourceCodeFileName'];
-        $errorFile    = $this->file['errorFileName'];
+        $sourceFile   = $this->file['sourceCode'];
+        $errorFile    = $this->file['error'];
 
-        $compileCmd = "$compilerName -lm $sourceFile 2> $errorFile";
+        $compileCmd = "$compilerName -lm $sourceFile -o ".$this->file['C_executableFile']." 2> $errorFile";
 
         shell_exec($compileCmd);
 
-        $this->processResultData['compilerMessage'] = file_get_contents($this->file['errorFileName']);
+        $this->processResultData['compilerMessage'] = file_get_contents($this->file['error']);
 
         return trim($this->processResultData['compilerMessage']) == "";
     }
@@ -197,8 +205,8 @@ class CPP
          */
 
         $timeOut = $this->compilerData['timeLimit'] + 0.1;
-        $runCmd  = "timeout " . $timeOut . "s ./a.out";
-        $runCmd .= " < " . $this->file['inputFileName'] . " | head -c 5000000 > " . $this->file['outputFileName'];
+        $runCmd  = "timeout " . $timeOut . "s ".$this->file['C_executableFile'];
+        $runCmd .= " < " . $this->file['input'] . " | head -c 5000000 > " . $this->file['output'];
 
         $executionStartTime = microtime(true);
         shell_exec($runCmd);
@@ -227,10 +235,10 @@ class CPP
      */
     public function removeAllProcessFile()
     {
-        exec("rm " . $this->file['sourceCodeFileName']);
+        exec("rm " . $this->file['sourceCode']);
         exec("rm *.o");
-        exec("rm " . $this->file['errorFileName']);
-        exec("rm " . $this->file['executableFile']);
+        exec("rm " . $this->file['error']);
+        exec("rm " . $this->file['C_executableFile']);
     }
 
 }
