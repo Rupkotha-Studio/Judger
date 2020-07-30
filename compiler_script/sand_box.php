@@ -213,7 +213,7 @@ class SandBox
             shell_exec($cmd);
             $checkerLog = file_get_contents($checkerLogFile);
         } else {
-            $checkerLog = "checker code is not valid ";
+            $checkerLog = "checker is not valid ";
         }
 
         $data                   = array();
@@ -229,7 +229,8 @@ class SandBox
 
     public function createCheckerFile()
     {
-        $checkerCode = file_get_contents("lib/checker/linecmp.cpp");
+        
+        $checkerCode = trim($this->apiData['checker']) !=""?$this->apiData['checker']:file_get_contents("lib/checker/linecmp.cpp");
         $this->makeFile($this->file['checker'], $checkerCode);
     }
 

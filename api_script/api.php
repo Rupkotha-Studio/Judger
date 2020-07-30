@@ -72,6 +72,8 @@
 			$data['timeLimit'] = isset($this->apiData['timeLimit'])?$this->apiData['timeLimit']:2;
 			$data['language'] = $this->apiData['language'];
 			$data['timeLimit'] = min($data['timeLimit'],10);
+			$data['checker'] = isset($this->apiData['checker'])?$this->apiData['checker']:"";
+			$data['checker'] = base64_decode($data['checker']);
 			$this->processData = $data;
 
 		}

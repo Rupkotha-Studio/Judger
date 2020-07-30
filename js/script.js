@@ -1,9 +1,11 @@
 $(document).ready(function() {
     setCodeEditor();
     changeLanguage();
+    setCheckerEditor();
 });
 
 var sourceCodeEditor;
+var checkerEditor;
 
 
 function checkNeedUpdate(){
@@ -47,11 +49,14 @@ function submitCode() {
         input: btoa($("#input").val()),
         expectedOutput: btoa($("#expectedOutput").val()),
         language: $("#language").val(),
-        timeLimit: $("#timeLimit").val()
+        timeLimit: $("#timeLimit").val(),
+        checker : btoa(checkerEditor.getValue())
     }
 
     var data = {};
     data['createSubmission'] = data1;
+
+    console.log(data);
 
     $("#runBtn").html("Running...");
     $("#runBtn").prop("disabled",true);
@@ -79,12 +84,27 @@ function processApiResponseData(response){
 function setCodeEditor(){
     sourceCodeEditor = ace.edit("code");
     sourceCodeEditor.setShowPrintMargin(false);
-    sourceCodeEditor.setOption("maxLines", 37);                    
-    sourceCodeEditor.setOption("minLines", 37);                    
+    sourceCodeEditor.setOption("maxLines", 18);                    
+    sourceCodeEditor.setOption("minLines", 18);                    
     sourceCodeEditor.setReadOnly(false);
     sourceCodeEditor.setFontSize("14px");
-
 }
+
+function setCheckerEditor(){
+    checkerEditor = ace.edit("checker");
+    checkerEditor.setShowPrintMargin(false);
+    checkerEditor.setOption("maxLines", 18);                    
+    checkerEditor.setOption("minLines", 18);                    
+    checkerEditor.setReadOnly(false);
+    checkerEditor.setFontSize("14px");
+
+    checkerEditor.setValue(checkEditorCode);
+    checkerEditor.clearSelection();
+
+    checkerEditor.getSession().setMode("ace/mode/c_cpp");
+}
+
+
 
 function changeLanguage() {
     var language = $("#language").val();
@@ -124,6 +144,16 @@ function setEditorSelectLanguage(selectLanguage){
 
 
 // Template Sources
+
+var checkEditorCode = "\
+#include \"testlib.h\"\n\
+#include <bits/stdc++.h>\nusing namespace std;\n\
+\n\
+int main(int argc, char * argv[]) {\n\
+    registerTestlibCmd(argc, argv);\n\
+    quitf(_ok,\"output is ok\");\n\
+}\n\
+";
 
 var cSource = "\
 #include <stdio.h>\n\

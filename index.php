@@ -66,8 +66,10 @@
 			
 			<div class="col-md-6">
 				<textarea class="sourceEditor" id="code" placeholder="Source Code"></textarea>
+				<textarea rows="4" class="inputEditor1" id="checker" placeholder="Checker"></textarea>
 			</div>
 			<div class="col-md-6">
+
 				<textarea rows="4" class="inputEditor" id="input" placeholder="Input"></textarea>
 				<textarea rows="4" class="inputEditor" id="expectedOutput" placeholder="Expected Output"></textarea>
 				<textarea rows="4" class="inputEditor1" id="output" placeholder="output" readonly></textarea>
