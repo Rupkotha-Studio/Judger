@@ -74,11 +74,9 @@ function processApiResponseData(response){
     if (typeof response.error == 'undefined') {
         if (response.status.status == "CE" || response.status.status == "RTE") $("#output").val(atob(response.compileMessage));
         else $("#output").val(atob(response.output));
-        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description);
+        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description+"<br/>Checker Log: " + response.checkerLog);
     } 
     else $("#outputResponse").html(response.errorMsg);
-    
-        
 }
 
 function setCodeEditor(){
