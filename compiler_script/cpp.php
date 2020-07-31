@@ -203,7 +203,7 @@ class CPP
 
         $timeOut = $this->compilerData['timeLimit'] + 0.1;
         $runCmd  = "timeout " . $timeOut . "s ".$this->file['C_executableFile'];
-        $runCmd .= " < " . $this->file['input'] . " | head -c 5000000 > " . $this->file['output'];
+        $runCmd .= " < " . $this->file['input'] . " | head -c 8000000 > " . $this->file['output'];
 
         $executionStartTime = microtime(true);
         shell_exec($runCmd);

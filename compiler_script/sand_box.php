@@ -8,7 +8,7 @@ class SandBox
     public $compileData;
     public $returnData        = array();
     public $languageError     = 0;
-    public $maxOutputFileSize = 5000000;
+    public $maxOutputFileSize = 8000000;
     protected $file           = array();
 
     public function __construct($data)
