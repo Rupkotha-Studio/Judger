@@ -189,7 +189,7 @@ class SandBox
 
     public function createCheckerFile()
     {
-        $checkerCode = trim($this->apiData['checker']) !=""?$this->apiData['checker']:file_get_contents("lib/checker/linecmp.cpp");
+        $checkerCode = trim($this->apiData['checker']) !=""?$this->apiData['checker']:file_get_contents("lib/checker/lcmp.cpp");
         $this->makeFile($this->file['checker'], $checkerCode);
     }
 
