@@ -19,3 +19,7 @@ $file = [
     'checkerLog'            => "checker_log.txt",
 
 ];
+
+foreach ($file as $key => $value) {
+    $file[$key] = "temp/" . $value;
+}

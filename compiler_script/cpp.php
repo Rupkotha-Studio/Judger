@@ -39,9 +39,6 @@ class CPP
 
         global $file;
         $this->file = $file;
-        foreach ($this->file as $key => $value) {
-            $this->file[$key] = "temp/" . $value;
-        }
 
     }
 

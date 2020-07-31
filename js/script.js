@@ -50,7 +50,8 @@ function submitCode() {
         expectedOutput: btoa($("#expectedOutput").val()),
         language: $("#language").val(),
         timeLimit: $("#timeLimit").val(),
-        checker : btoa(checkerEditor.getValue())
+        checker : btoa(checkerEditor.getValue()),
+        apiType : "compile"
     }
 
     var data = {};

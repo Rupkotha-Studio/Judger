@@ -19,10 +19,6 @@ class SandBox
         global $file;
         $this->file = $file;
 
-        foreach ($this->file as $key => $value) {
-            $this->file[$key] = "temp/" . $value;
-        }
-
     }
 
     public function compile()
@@ -185,63 +181,16 @@ class SandBox
 
     public function checker()
     {
-        //$cmd = "g++ --std=c++11 $fileName 2> spj_error.txt";
-        //$out = shell_exec($cmd);
-        //echo "$out";
-        $this->createTestLib();
         $this->createCheckerFile();
-
-        $checkerFileName       = $this->file['checker'];
-        $checkerErrorFile      = $this->file['checkerError'];
-        $checkerExecutableFile = $this->file['checkerExecutableFile'];
-
-        $cmd = "g++ --std=c++11 $checkerFileName -o $checkerExecutableFile  2> $checkerErrorFile";
-        shell_exec($cmd);
-        $checkerError = file_get_contents($checkerErrorFile);
-
-        $ckeckerLog = "";
-
-        if (trim($checkerError) == "") {
-
-            $checkerLogFile = $this->file['checkerLog'];
-
-            $input          = $this->file['input'];
-            $output         = $this->file['output'];
-            $expectedOutput = $this->file['expectedOutput'];
-
-            $cmd = "timeout 1s ./$checkerExecutableFile $input $output $expectedOutput 2> $checkerLogFile";
-            shell_exec($cmd);
-            $checkerLog = file_get_contents($checkerLogFile);
-        } else {
-            $checkerLog = "checker is not valid ";
-        }
-
-        $data                   = array();
-        $data['checkerLog']     = $checkerLog;
-        $data['checkerVerdict'] = $this->getCheckerVerdict($checkerLog);
-        return $data;
+        $Checker = new Checker();
+        return $Checker->runChecker();
     }
 
-    public function createTestLib()
-    {
-        shell_exec("cp lib/testlib.h temp");
-    }
 
     public function createCheckerFile()
     {
-        
         $checkerCode = trim($this->apiData['checker']) !=""?$this->apiData['checker']:file_get_contents("lib/checker/linecmp.cpp");
         $this->makeFile($this->file['checker'], $checkerCode);
-    }
-
-    public function getCheckerVerdict($checkerLog)
-    {
-        if (strlen($checkerLog) < 2) {
-            return 0;
-        }
-
-        $ok = substr($checkerLog, 0, 2);
-        return $ok == "ok" ? 1 : 0;
     }
 
 }
