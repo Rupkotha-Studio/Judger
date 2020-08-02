@@ -1,5 +1,5 @@
 body {
-	background: #F1F1F1;
+	background: #F7F9FC;
 	font-family: "Exo 2";
 	padding: 5px 10px 5px 10px;
 	overflow-x: hidden;
@@ -109,4 +109,14 @@ body {
 }
 .apiOutputBody{
 	padding: 3px 5px 3px 5px;
+}
+
+.supClass{
+	font-size: 14px;
+	margin-top: -25px;
+}
+
+.fieldTitle{
+	font-weight: bold;
+	font-size: 15px;
 }

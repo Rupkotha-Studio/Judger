@@ -81,6 +81,12 @@ class SandBox
         return $this->returnData;
     }
 
+    public function compressString($str,$len=100){
+        $stringLen = strlen($str);
+        if($stringLen<=$len)return $str;
+        return substr($str, 0, $len)."...";
+    }
+
     public function processData()
     {
         $compilerMessage                          = $this->compileData['compilerMessage'];
@@ -127,7 +133,8 @@ class SandBox
             $checkerLog  = $checkerData['checkerLog'];
         }
 
-        $outputVal = ($outputFilesize > 3000) ? "Output Is Large" : file_get_contents($this->file['output']);
+        $outputVal = file_get_contents($this->file['output']);
+        $outputVal = $this->compressString($outputVal,3000);
 
         $this->returnData['output']           = base64_encode($outputVal);
         $this->returnData['time']             = $this->compileData['time'];
