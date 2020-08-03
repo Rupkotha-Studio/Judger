@@ -14,9 +14,9 @@ function runChecker() {
         apiType : "checker"
     }
 
-    $("#runBtn").html("Running...");
+    $("#runBtn").html("Running....");
     $("#runBtn").prop("disabled",true);
-    $("#outputResponse").html("loading....");
+    $("#outputResponse").html("<i class='fa fa-spinner fa-spin'></i> Wating For Response...");
     $("#debug").html("");
     $.post("api.php", data, function(response) {
         processApiResponseData(response);
@@ -29,7 +29,16 @@ function processApiResponseData(response){
     $("#debug").html(response);
     response = JSON.parse(response);
     if (typeof response.error == 'undefined') {
-        $("#outputResponse").html("<u>Checker Log:</u> <br/>" + response.checkerLog);
+        if(response.checkerError!="")
+            $("#outputResponse").html("<div class='checkerError'><b><i class='fa fa-exclamation-circle'></i> Checker Error:</b><br/>" + response.checkerError+"</div>");
+        else{
+            if(response.checkerVerdict == 1)
+                $("#outputResponse").html("<div class='checkerValidVerdict'><i class='fa fa-check-circle'></i> Checker Verdict Is Correct</div>");
+            else 
+                $("#outputResponse").html("<div class='checkerWrongVerdict'><i class='fa fa-times-circle'></i> Checker Verdict Is Wrong</div>");
+            $("#outputResponse").append("<div class='checkerLog'>" + response.checkerLog+"</div>");
+        }
+        
     } 
     else $("#outputResponse").html(response.errorMsg);
 }
@@ -37,8 +46,8 @@ function processApiResponseData(response){
 function setCheckerEditor(){
     checkerEditor = ace.edit("checker");
     checkerEditor.setShowPrintMargin(false);
-    checkerEditor.setOption("maxLines", 33);                    
-    checkerEditor.setOption("minLines", 33);                    
+    checkerEditor.setOption("maxLines", 31);                    
+    checkerEditor.setOption("minLines", 31);                    
     checkerEditor.setReadOnly(false);
     checkerEditor.setFontSize("14px");
 

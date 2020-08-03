@@ -81,6 +81,7 @@ class Checker
         $data                   = array();
         $data['checkerLog']     = $checkerLog;
         $data['checkerVerdict'] = $this->getCheckerVerdict($checkerLog);
+        $data['checkerError'] = $checkerError;
         return $data;
     }
 

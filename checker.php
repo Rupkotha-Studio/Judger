@@ -33,7 +33,7 @@
 			<div class="col-md-12">
 				<div class="topTitleArea">
 					<div class="topTitle">
-						CoderOJ<strong color="#ced6e0;"><sup class="supClass"><?php echo "v $version"; ?></sup></strong>
+						CoderOJ<strong color="#ced6e0;"></strong>
 						<span class="topSubTitle">Checker
 							<span class="pull-right" id="versionBtnArea" style="display: none"><button onclick="updateVersion()" id="updateVersionBtn"></button></span>
 						</span>
