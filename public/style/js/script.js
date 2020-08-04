@@ -62,7 +62,7 @@ function submitCode() {
     $("#runBtn").html("Running...");
     $("#runBtn").prop("disabled",true);
 
-    $.post("api.php", data1, function(response) {
+    $.post("api", data1, function(response) {
         processApiResponseData(response);
     });
 }

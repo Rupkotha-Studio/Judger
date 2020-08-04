@@ -15,10 +15,7 @@ class SandBox
     {
         $this->apiData = $data;
         $this->setCompiler();
-
-        global $file;
-        $this->file = $file;
-
+        $this->file = $GLOBALS['file'];
     }
 
     public function compile()
@@ -39,7 +36,6 @@ class SandBox
     {
 
         exec("mkdir -m 777 -p temp");
-
         $this->makeFile($this->file['output']);
         $this->makeFile($this->file['input'], $this->apiData['input']);
         $this->makeFile($this->file['expectedOutput'], $this->apiData['expectedOutput']);
@@ -198,7 +194,7 @@ class SandBox
 
     public function createCheckerFile()
     {
-        $checkerCode = trim($this->apiData['checker']) !=""?$this->apiData['checker']:file_get_contents("lib/checker/lcmp.cpp");
+        $checkerCode = trim($this->apiData['checker']) !=""?$this->apiData['checker']:file_get_contents("src/lib/testlib/checker/lcmp.cpp");
         $this->makeFile($this->file['checker'], $checkerCode);
     }
 

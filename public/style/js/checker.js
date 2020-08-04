@@ -1,8 +1,43 @@
 $(document).ready(function() {
+    setFieldVal();
     setCheckerEditor();
 });
 
 var checkerEditor;
+var checkerCode,input,output,answer;
+
+function setFieldVal(){
+   // eraseCookie("checkerEditor");
+   // checkerCode = getCookie("checkerEditor");
+   // if(checkerCode == "")
+        checkerCode = checkEditorCode;
+   // $("#input").val(getCookie("input"));
+   // $("#output").val(getCookie("output"));
+   // $("#expectedOutput").val(getCookie("expectedOutput"));
+}
+
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {   
+    document.cookie = name+'=; Max-Age=-99999999;';  
+}
 
 function runChecker() {
 
@@ -18,7 +53,7 @@ function runChecker() {
     $("#runBtn").prop("disabled",true);
     $("#outputResponse").html("<i class='fa fa-spinner fa-spin'></i> Wating For Response...");
     $("#debug").html("");
-    $.post("api.php", data, function(response) {
+    $.post("api", data, function(response) {
         processApiResponseData(response);
     });
 }
@@ -50,13 +85,16 @@ function setCheckerEditor(){
     checkerEditor.setOption("minLines", 31);                    
     checkerEditor.setReadOnly(false);
     checkerEditor.setFontSize("14px");
-
-    checkerEditor.setValue(checkEditorCode);
+    checkerEditor.setValue(checkerCode);
     checkerEditor.clearSelection();
 
     checkerEditor.getSession().setMode("ace/mode/c_cpp");
 }
 
+function updateTxt(e){
+    setCookie(e.id, e.value, 30);
+    console.log(e.value);
+}
 
 var checkEditorCode = "\
 #include \"testlib.h\"\n\

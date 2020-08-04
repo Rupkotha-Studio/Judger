@@ -23,3 +23,5 @@ $file = [
 foreach ($file as $key => $value) {
     $file[$key] = "temp/" . $value;
 }
+
+$GLOBALS['file'] = $file;

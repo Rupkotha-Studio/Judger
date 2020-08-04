@@ -87,7 +87,7 @@ class Checker
 
     public function createTestLib()
     {
-        shell_exec("cp lib/testlib.h temp");
+        shell_exec("cp src/lib/testlib/testlib.h temp");
     }
 
     public function getCheckerVerdict($checkerLog)
