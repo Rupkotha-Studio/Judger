@@ -154,9 +154,11 @@ class SandBox
                 break;
             case "CE":
                 $this->returnData['status']['description'] = "Compilation Error";
+                $this->returnData['checkerLog'] = $this->compileData['compilerMessage'];
                 break;
             case "RTE":
                 $this->returnData['status']['description'] = "Runtime Error";
+                $this->returnData['checkerLog'] = $this->compileData['compilerMessage'];
                 break;
             case "OLE":
                 $this->returnData['status']['description'] = "Output Limit Exceeded";
