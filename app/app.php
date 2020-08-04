@@ -1,31 +1,30 @@
 <?php
 
 /**
- * 
+ *
  */
 
 require 'app/page.php';
 $GLOBALS['pageList'] = $pageList;
 class App
 {
-	private $pageList = array();
-	
-	function __construct()
-	{
-		$this->pageList = $GLOBALS['pageList'];
-		$this->loadPage();
-	}
+    private $pageList = array();
 
-	public function loadPage(){
-		$url = isset($_SERVER['PATH_INFO']) ? explode('/', ltrim($_SERVER['PATH_INFO'],'/')) : '/';
-    	$url = isset($url[0])?$url[0]:$url;
-    	
-    	if(isset($this->pageList[$url])){
-    		$page = $this->pageList[$url];
-    		include "public/views/$page.php";
-    	}
-    	else echo "request is not found";
-    	
-    	
-	}
+    public function __construct()
+    {
+        $this->pageList = $GLOBALS['pageList'];
+        $this->loadPage();
+    }
+
+    public function loadPage()
+    {
+        foreach ($this->pageList as $key => $value) {
+            if (isset($_GET[$key])) {
+                include "public/views/$value.php";
+                return;
+            }
+        }
+        include "public/views/welcome.php";
+        echo "request is not found";
+    }
 }

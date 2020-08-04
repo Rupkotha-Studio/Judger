@@ -6,6 +6,7 @@ $(document).ready(function() {
 
 var sourceCodeEditor;
 var checkerEditor;
+var apiUrl = "index.php?api";
 
 
 function checkNeedUpdate(){
@@ -62,7 +63,7 @@ function submitCode() {
     $("#runBtn").html("Running...");
     $("#runBtn").prop("disabled",true);
 
-    $.post("api", data1, function(response) {
+    $.post(apiUrl, data1, function(response) {
         processApiResponseData(response);
     });
 }

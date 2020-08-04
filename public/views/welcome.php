@@ -67,8 +67,8 @@
                 </div>
 
                 <div class="links">
-                    <a href="ide">Ide</a>
-                    <a href="checker">Checker</a>
+                    <a href="index.php?ide">Ide</a>
+                    <a href="index.php?checker">Checker</a>
                     <a href="https://github.com/Coder-Online-Judge/compiler">Github</a>
                 </div>
             </div>

@@ -3,6 +3,8 @@ $(document).ready(function() {
     setCheckerEditor();
 });
 
+var apiUrl = "index.php?api";
+
 var checkerEditor;
 var checkerCode,input,output,answer;
 
@@ -53,7 +55,7 @@ function runChecker() {
     $("#runBtn").prop("disabled",true);
     $("#outputResponse").html("<i class='fa fa-spinner fa-spin'></i> Wating For Response...");
     $("#debug").html("");
-    $.post("api", data, function(response) {
+    $.post(apiUrl, data, function(response) {
         processApiResponseData(response);
     });
 }
