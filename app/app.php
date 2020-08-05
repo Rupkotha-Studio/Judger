@@ -25,6 +25,5 @@ class App
             }
         }
         include "public/views/welcome.php";
-        echo "request is not found";
     }
 }
