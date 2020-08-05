@@ -11,9 +11,9 @@
 <script type="text/javascript" src="http://coderoj.com/style/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
 
-<?php 
-	$infoData = json_decode(file_get_contents("info.json"),true);
-	$version = $infoData['version'];	
+<?php
+$infoData = json_decode(file_get_contents("info.json"), true);
+$version  = $infoData['version'];
 ?>
 
 <script type="text/javascript">
@@ -37,15 +37,15 @@
 						<span class="topSubTitle">Checker
 							<span class="pull-right" id="versionBtnArea" style="display: none"><button onclick="updateVersion()" id="updateVersionBtn"></button></span>
 						</span>
-						
+
 					</div>
 				</div>
 
 			</div>
 
-			<?php include "public/views/checker_editor.php"; ?>
-			
-			
+			<?php include "public/views/checker_editor.php";?>
+
+
 		</div>
 		<div class="col-md-12">
 			<div class="footer">

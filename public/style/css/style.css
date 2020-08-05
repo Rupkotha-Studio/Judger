@@ -1,122 +1,120 @@
 body {
-	background: #F7F9FC;
-	font-family: "Exo 2";
-	padding: 5px 10px 5px 10px;
-	overflow-x: hidden;
+    background: #F7F9FC;
+    font-family: "Exo 2";
+    padding: 5px 10px 5px 10px;
+    overflow-x: hidden;
 }
-
 .topTitleArea {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
-
 .topTitle {
-	font-size: 40px;
-	font-weight: bold;
-	color: #2c3e50;
+    font-size: 40px;
+    font-weight: bold;
+    color: #2c3e50;
 }
-
 .topSubTitle {
-	font-size: 18px;
-	color: #34495e;
-	font-weight: bold;
+    font-size: 18px;
+    color: #34495e;
+    font-weight: bold;
 }
-
 .sourceEditor {
-	width: 100%;
-	height: 100px;
-	margin-bottom: 10px;
-	resize: none;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    resize: none;
 }
-
 .inputEditor {
-	width: 49%;
-	height: 140px;
-	resize: none;
-	padding: 5px;
+    width: 49%;
+    height: 140px;
+    resize: none;
+    padding: 5px;
 }
-.inputEditor:focus{
-	outline: none;
+.inputEditor:focus {
+    outline: none;
 }
-
 .inputEditor1 {
-	width: 100%;
-	height: 160px;
-	margin-bottom: 10px;
-	resize: none;
-	padding: 5px;
+    width: 100%;
+    height: 160px;
+    margin-bottom: 10px;
+    resize: none;
+    padding: 5px;
 }
-.inputEditor1:focus{
-	outline: none;
+.inputEditor1:focus {
+    outline: none;
 }
-
-.btn {
-
-}
-
+.btn {}
 .dashboardBody {
-	background: #ffffff;
-	height: auto;
-	padding: 15px;
+    background: #ffffff;
+    height: auto;
+    padding: 15px;
 }
-
-
-.selectLanguage{
-	width: 100%;
-	margin-bottom: 10px;
+.selectLanguage {
+    width: 100%;
+    margin-bottom: 10px;
 }
-
-.version{
-	text-align: center;
-	background-color: #000000;
-	margin-top: 5px;
-	color: #ffffff;
-	font-weight: bold;
+.version {
+    text-align: center;
+    background-color: #000000;
+    margin-top: 5px;
+    color: #ffffff;
+    font-weight: bold;
 }
-
-.footer{
-	position: fixed;
-  	left: 0;
-  	bottom: 0;
-  	width: 100%;
-  	font-size: 14px;
-  	background-color: #0F6EB8;
-  	color: #eeeeee;
-  	font-weight: bold;
-  	text-align: center;
-  	padding: 0px 20px 0px 20px;
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+    background-color: #0F6EB8;
+    color: #eeeeee;
+    font-weight: bold;
+    text-align: center;
+    padding: 0px 20px 0px 20px;
 }
-
-.apiResponseOutput{
-	background-color: #ffffff;
-	border: 1px solid #eeeeee;
-	padding: 5px;
-	height: 170px;
-	overflow-y: scroll;
+.apiResponseOutput {
+    background-color: #ffffff;
+    border: 1px solid #eeeeee;
+    padding: 5px;
+    height: 170px;
+    overflow-y: scroll;
 }
-
-.apiOutputBox{
-	border: 1px solid #eeeeee;
-	margin-bottom: 5px;
-	border-radius: 5px;
+.apiOutputBox {
+    border: 1px solid #eeeeee;
+    margin-bottom: 5px;
+    border-radius: 5px;
 }
-
-.apiOutputHeader{
-	background-color: #eeeeee;
-	border: 1px solid #eeeeee;
-	border-width: 0px 0px 1px 0px;
-	font-weight: bold;
-	padding: 3px 5px 3px 5px;
+.apiOutputHeader {
+    background-color: #eeeeee;
+    border: 1px solid #eeeeee;
+    border-width: 0px 0px 1px 0px;
+    font-weight: bold;
+    padding: 3px 5px 3px 5px;
 }
-.apiOutputBody{
-	padding: 3px 5px 3px 5px;
+.apiOutputBody {
+    padding: 3px 5px 3px 5px;
 }
-
-.supClass{
-	font-size: 14px;
-	margin-top: -25px;
+.supClass {
+    font-size: 14px;
+    margin-top: -25px;
 }
-
-.fieldTitle{
-	font-weight: bold;
-	font-size: 15px;
+.fieldTitle {
+    font-weight: bold;
+    font-size: 15px;
+}
+.checkerError {
+    color: red;
+}
+.checkerValidVerdict {
+    color: green;
+    font-weight: bold;
+}
+.checkerWrongVerdict {
+    color: red;
+    font-weight: bold;
+}
+.checkerLog {
+    color: #2c3e50;
+}
+.checkerLogBody {
+    color: #34495e;
 }

@@ -18,24 +18,3 @@
 		<textarea style="height: 140px;width: 100%" onkeyup="updateTxt(this)" rows="4" class="inputEditor" id="expectedOutput" placeholder="Expected Output"></textarea>
 		<div id="debug" style="margin-bottom: 4px;"></div>
 </div>
-
-
-<style type="text/css">
-	.checkerError{
-		color: red;
-	}
-	.checkerValidVerdict{
-		color: green;
-		font-weight: bold;
-	}
-	.checkerWrongVerdict{
-		color: red;
-		font-weight: bold;
-	}
-	.checkerLog{
-		color: #2c3e50;
-	}
-	.checkerLogBody{
-		color: #34495e;
-	}
-</style>

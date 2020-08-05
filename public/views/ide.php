@@ -88,4 +88,4 @@
 </body>
 </html>
 
-<script type="text/javascript" src="public/style/js/script.js"></script>
+<script type="text/javascript" src="public/style/js/ide.js"></script>

@@ -3,34 +3,31 @@ $(document).ready(function() {
     changeLanguage();
     setCheckerEditor();
 });
-
 var sourceCodeEditor;
 var checkerEditor;
 var apiUrl = "index.php?api";
 
-
-function checkNeedUpdate(){
-    
+function checkNeedUpdate() {
     $.get(gitInfoUrl, "", function(response) {
-       response = JSON.parse(response);
-       githubVersion = response.version;
-       if(githubVersion != currentVersion){
-        $("#versionBtnArea").show();
-        $("#updateVersionBtn").html("Update New Version "+githubVersion);
-       }
-       
+        response = JSON.parse(response);
+        githubVersion = response.version;
+        if (githubVersion != currentVersion) {
+            $("#versionBtnArea").show();
+            $("#updateVersionBtn").html("Update New Version " + githubVersion);
+        }
     });
 }
 
-setTimeout(function(){ checkNeedUpdate(); }, 3000);
+setTimeout(function() {
+    checkNeedUpdate();
+}, 3000);
 
-function updateVersion(){
-
+function updateVersion() {
     var data = {
-        'updateVersion' : 1
+        'updateVersion': 1
     }
     $("#updateVersionBtn").html("Updating...");
-    $("#updateVersionBtn").prop("disabled",true);
+    $("#updateVersionBtn").prop("disabled", true);
     $.post("ajax_request.php", data, function(response) {
         alert(response);
         location.reload();
@@ -38,73 +35,62 @@ function updateVersion(){
 }
 
 function submitCode() {
-
     var timeLimit = $("#timeLimit").val();
     if (timeLimit == "") {
         alert("Enter Time Limit");
         return;
     }
-
     var data1 = {
         sourceCode: btoa(sourceCodeEditor.getValue()),
         input: btoa($("#input").val()),
         expectedOutput: btoa($("#expectedOutput").val()),
         language: $("#language").val(),
         timeLimit: $("#timeLimit").val(),
-        checker : btoa(checkerEditor.getValue()),
-        apiType : "compile"
+        checker: btoa(checkerEditor.getValue()),
+        apiType: "compile"
     }
-
     var data = {};
     data['createSubmission'] = data1;
-
     console.log(data);
-
     $("#runBtn").html("Running...");
-    $("#runBtn").prop("disabled",true);
-
+    $("#runBtn").prop("disabled", true);
     $.post(apiUrl, data1, function(response) {
         processApiResponseData(response);
     });
 }
 
-function processApiResponseData(response){
+function processApiResponseData(response) {
     $("#runBtn").html("Run");
-    $("#runBtn").prop("disabled",false);
+    $("#runBtn").prop("disabled", false);
     $("#debug").html(response);
     response = JSON.parse(response);
     if (typeof response.error == 'undefined') {
         if (response.status.status == "CE" || response.status.status == "RTE") $("#output").val(atob(response.compileMessage));
         else $("#output").val(atob(response.output));
-        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description+"<br/>Checker Log: " + response.checkerLog);
-    } 
-    else $("#outputResponse").html(response.errorMsg);
+        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description + "<br/>Checker Log: " + response.checkerLog);
+    } else $("#outputResponse").html(response.errorMsg);
 }
 
-function setCodeEditor(){
+function setCodeEditor() {
     sourceCodeEditor = ace.edit("code");
     sourceCodeEditor.setShowPrintMargin(false);
-    sourceCodeEditor.setOption("maxLines", 18);                    
-    sourceCodeEditor.setOption("minLines", 18);                    
+    sourceCodeEditor.setOption("maxLines", 18);
+    sourceCodeEditor.setOption("minLines", 18);
     sourceCodeEditor.setReadOnly(false);
     sourceCodeEditor.setFontSize("14px");
 }
 
-function setCheckerEditor(){
+function setCheckerEditor() {
     checkerEditor = ace.edit("checker");
     checkerEditor.setShowPrintMargin(false);
-    checkerEditor.setOption("maxLines", 18);                    
-    checkerEditor.setOption("minLines", 18);                    
+    checkerEditor.setOption("maxLines", 18);
+    checkerEditor.setOption("minLines", 18);
     checkerEditor.setReadOnly(false);
     checkerEditor.setFontSize("14px");
-
     checkerEditor.setValue(checkEditorCode);
     checkerEditor.clearSelection();
-
     checkerEditor.getSession().setMode("ace/mode/c_cpp");
 }
-
-
 
 function changeLanguage() {
     var language = $("#language").val();
@@ -113,38 +99,28 @@ function changeLanguage() {
     if (language == "CPP") editorCode = cppSource;
     if (language == "CPP11") editorCode = cppSource;
     if (language == "JAVA") editorCode = javaTestSource;
-
     $("#code").val(editorCode);
     sourceCodeEditor.setValue(editorCode);
     sourceCodeEditor.clearSelection();
     setEditorSelectLanguage(language);
 }
 
-function setEditorSelectLanguage(selectLanguage){
+function setEditorSelectLanguage(selectLanguage) {
     if (selectLanguage.startsWith("C")) {
         sourceCodeEditor.getSession().setMode("ace/mode/c_cpp");
-    }
-    else if (selectLanguage.startsWith("CPP")) {
+    } else if (selectLanguage.startsWith("CPP")) {
         sourceCodeEditor.getSession().setMode("ace/mode/c_cpp");
-    }
-    else if (selectLanguage.startsWith("JAVA")) {
-       sourceCodeEditor.getSession().setMode("ace/mode/java");
-    }
-    else if (selectLanguage.startsWith("PY")) {
+    } else if (selectLanguage.startsWith("JAVA")) {
+        sourceCodeEditor.getSession().setMode("ace/mode/java");
+    } else if (selectLanguage.startsWith("PY")) {
         sourceCodeEditor.getSession().setMode("ace/mode/python");
-    }
-    else if (selectLanguage.startsWith("RUST")) {
+    } else if (selectLanguage.startsWith("RUST")) {
         sourceCodeEditor.getSession().setMode("ace/mode/rust");
-    }
-    else if (selectLanguage.startsWith("D")) {
+    } else if (selectLanguage.startsWith("D")) {
         sourceCodeEditor.getSession().setMode("ace/mode/d");
     }
 }
-
-
-
 // Template Sources
-
 var checkEditorCode = "\
 #include \"testlib.h\"\n\
 #include <bits/stdc++.h>\nusing namespace std;\n\
@@ -154,7 +130,6 @@ int main(int argc, char * argv[]) {\n\
     quitf(_ok,\"output is ok\");\n\
 }\n\
 ";
-
 var cSource = "\
 #include <stdio.h>\n\
 \n\
@@ -163,8 +138,6 @@ int main(void) {\n\
     return 0;\n\
 }\n\
 ";
-
-
 var cppSource = "\
 #include <bits/stdc++.h>\nusing namespace std;\n\
 \n\
@@ -173,14 +146,11 @@ int main() {\n\
     return 0;\n\
 }\n\
 ";
-
 var prologSource = "\
 :- initialization(main).\n\
 main :- write('hello, world\\n').\n\
 ";
-
 var pythonSource = "print(\"hello, world\")";
-
 var javaTestSource = "\
 import static org.junit.jupiter.api.Assertions.assertEquals;\n\
 \n\
