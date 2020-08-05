@@ -1,6 +1,6 @@
 {
-  "name": "compiler",
-  "version": "1.5.3",
+  "name": "judger",
+  "version": "1.5.4",
   "github-url": "https://github.com/Coder-Online-Judge/judger",
   "github-info-file": "https://raw.githubusercontent.com/Coder-Online-Judge/judger/master/info.json"
 }
