@@ -1,7 +1,5 @@
 # Judger
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
-![.NET Core](https://img.shields.io/badge/.netcore-3.1-brightgreen.svg)
-![Build Status](https://travis-ci.com/Azure99/OpenJudger.svg?branch=master)
+[![Judger Wallpaper](https://github.com/coder-o-j/judger/public/file/home.png?raw=true)](https://judger.coderoj.com)
 ## Introduction
 CoderOJ Judeger is a linux based high performance programming problem solution judger that support multiple languages and special judge and easily useable.
 ## Overview
