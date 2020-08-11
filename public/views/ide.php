@@ -24,7 +24,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>CoderOJ Compiler</title>
+	<title>CoderOJ Ide</title>
 </head>
 <body>
 
@@ -34,7 +34,7 @@
 				<div class="topTitleArea">
 					<div class="topTitle">
 						CoderOJ
-						<span class="topSubTitle">Compiler
+						<span class="topSubTitle">Ide
 							<span class="pull-right" id="versionBtnArea" style="display: none"><button onclick="updateVersion()" id="updateVersionBtn"></button></span>
 						</span>
 						
