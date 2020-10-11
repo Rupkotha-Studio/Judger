@@ -173,7 +173,6 @@ class SandBox
 
     public function compareOutput()
     {
-
         $outputFile         = $this->file['output'];
         $expectedOutputFile = $this->file['expectedOutput'];
         $compareFile        = $this->file['compare'];
@@ -181,7 +180,20 @@ class SandBox
         $this->trimFile($outputFile);
         $this->trimFile($expectedOutputFile);
 
+        if(trim($this->apiData['checker']) == "")return $this->compareNotSpecialJudge();
+
         return $this->checker();
+    }
+
+    public function compareNotSpecialJudge(){
+        $this->trimFile($this->file['output']);
+        $this->trimFile($this->file['expectedOutput']);
+        shell_exec("diff ".$this->file['output']." ".$this->file['expectedOutput']." > ".$this->file['compare']);
+        $compareFilesize = filesize($this->file['compare']);
+        return [
+            'checkerVerdict' => $compareFilesize == 0,
+            'checkerLog' => $compareFilesize == 0 ? "OK": "Wrong"
+        ];
     }
 
     public function checker()
