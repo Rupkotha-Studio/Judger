@@ -50,7 +50,25 @@ class Checker
         //$cmd = "g++ --std=c++11 $fileName 2> spj_error.txt";
         //$out = shell_exec($cmd);
         //echo "$out";
+        return !file_exists($this->file['checker'])? $this->runNormalChecker():$this->runSpjChecker();
+        
+    }
 
+    public function runNormalChecker(){
+        $this->createNormalCheckerScript();
+        $checkerLogFile = $this->file['checkerLog'];
+        $cmd = "bash temp/checker.sh > $checkerLogFile";
+        shell_exec($cmd);
+        $checkerLog = file_get_contents($checkerLogFile);
+
+        return [
+            'checkerLog' => $checkerLog,
+            'checkerVerdict' => $this->getCheckerVerdict($checkerLog),
+            'checkerError' => ""
+        ];
+    }
+
+    public function runSpjChecker(){
         $this->createTestLib();
 
         $checkerFileName       = $this->file['checker'];
@@ -90,6 +108,10 @@ class Checker
         shell_exec("cp src/lib/testlib/testlib.h temp");
     }
 
+    public function createNormalCheckerScript()
+    {
+        shell_exec("cp src/lib/normalChecker/checker.sh temp");
+    }
     public function getCheckerVerdict($checkerLog)
     {
         if (strlen($checkerLog) < 2) {
