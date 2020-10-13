@@ -30,7 +30,35 @@ diff "$outputFile" "$expectedOutputFile" > "$diffFile"
 
 if [ -s "$diffFile" ]
 then
-	echo "wrong answer ouput can not match expected answer"
+	mapfile -t outputList < "temp/output.txt"
+	mapfile -t expectedList < "temp/expected_output.txt"
+	# all lines
+	lenOutFile=${#outputList[@]}
+	lenExpFile=${#expectedList[@]}
+
+	if [ $lenOutFile -gt $lenExpFile ]
+	then
+    	mxLen=$lenOutFile
+	else
+    	mxLen=$lenExpFile
+	fi
+
+	for ((i=0; i<$mxLen; i++))
+	do
+ 		st1=${outputList[$i]}
+ 		st2=${expectedList[$i]}
+ 		if [ "$st1" != "$st2" ]; 
+ 		then
+ 			diffLineNo=$(($i + 1 ))
+ 			pExpected=$st2
+ 			pFound=$st1
+    		break
+		fi
+	done
+	pExpected=$(compress "$pExpected");
+	pFound=$(compress "$pFound");
+
+	echo "wrong answer $diffLineNo""th line differ - expected: '$pExpected', found: '$pFound'"
 else 
 	totalLine=$(getTotalLine "$outputFile");
 	if [ $totalLine != 1 ]
