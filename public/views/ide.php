@@ -55,6 +55,7 @@
 					</div>
 					<div class="col-md-4">
 						<input type="number" name="" class="form-control" id="timeLimit" value="2" placeholder="Time Limit">
+						<input type="number" name="" class="form-control" id="memoryLimit" value="128000" placeholder="Memory Limit">
 					</div>
 					<div class="col-md-2">
 						<button id="runBtn" onclick="submitCode()">Run</button>
@@ -73,7 +74,7 @@
 				<textarea rows="4" class="inputEditor" id="input" placeholder="Input"></textarea>
 				<textarea rows="4" class="inputEditor" id="expectedOutput" placeholder="Expected Output"></textarea>
 				<textarea rows="4" class="inputEditor1" id="output" placeholder="output" readonly></textarea>
-				<div id="outputResponse" style="margin-bottom: 10px;">Total Time: <br/>Status: <br/>Checker Log: </div>
+				<div id="outputResponse" style="margin-bottom: 10px;">Total Time: <br/>Total Memory:<br/>Status: <br/>Checker Log: </div>
 				<div id="debug" style="margin-bottom: 10px;"></div>
 			</div>
 		</div>

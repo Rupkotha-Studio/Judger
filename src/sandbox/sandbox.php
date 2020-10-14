@@ -104,21 +104,24 @@ class SandBox
             if ($outputFilesize >= $this->maxOutputFileSize) {
                 $status = "OLE";
             }
-
         }
 
         if ($status == "") {
             if ($this->apiData['timeLimit'] < $this->compileData['time']) {
                 $status = "TLE";
             }
+        }
 
+        if ($status == "") {
+            if ($this->apiData['memoryLimit'] < $this->compileData['memory']) {
+                $status = "MLE";
+            }
         }
 
         if ($status == "") {
             if ($outputFilesize == 0) {
                 $status = "RTE";
             }
-
         }
 
         $checkerLog = "";
@@ -158,6 +161,9 @@ class SandBox
                 break;
             case "OLE":
                 $this->returnData['status']['description'] = "Output Limit Exceeded";
+                break;
+            case "MLE":
+                $this->returnData['status']['description'] = "Memory Limit Exceeded";
                 break;
             default:
                 $this->returnData['status']['description'] = "Internal Error";

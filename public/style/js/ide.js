@@ -46,6 +46,7 @@ function submitCode() {
         expectedOutput: btoa($("#expectedOutput").val()),
         language: $("#language").val(),
         timeLimit: $("#timeLimit").val(),
+        memoryLimit: $("#memoryLimit").val(),
         checker: btoa(checkerEditor.getValue()),
         apiType: "compile"
     }
@@ -65,9 +66,9 @@ function processApiResponseData(response) {
     $("#debug").html(response);
     response = JSON.parse(response);
     if (typeof response.error == 'undefined') {
-        if (response.status.status == "CE" || response.status.status == "RTE") $("#output").val(atob(response.compileMessage));
+        if (response.status.status == "CE" || response.status.status == "MLE" ||  response.status.status == "RTE") $("#output").val(atob(response.compileMessage));
         else $("#output").val(atob(response.output));
-        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Status: " + response.status.description + "<br/>Checker Log: " + response.checkerLog);
+        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Total Memory: "+response.memory+"<br/>Status: " + response.status.description + "<br/>Checker Log: " + response.checkerLog);
     } else $("#outputResponse").html(response.errorMsg);
 }
 

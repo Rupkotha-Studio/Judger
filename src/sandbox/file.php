@@ -11,6 +11,7 @@ $file = [
     'compare'               => "compare.txt",
     'cppFile'               => "main.cpp",
     'cFile'                 => "main.c",
+    'memory'                 => "memory.txt",
 
     //checker file
     'checker'               => "checker.cpp",

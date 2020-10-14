@@ -202,12 +202,19 @@ class CPP
          */
 
         $timeOut = $this->compilerData['timeLimit'] + 0.1;
-        $runCmd  = "timeout " . $timeOut . "s ".$this->file['C_executableFile'];
-        $runCmd .= " < " . $this->file['input'] . " | head -c 8000000 > " . $this->file['output'];
+        $C_executableFile = $this->file['C_executableFile'];
+        $input = $this->file['input'];
+        $memory = $this->file['memory'];
+        $output = $this->file['output'];
+
+        $runCmd  = "timeout $timeOut"."s /usr/bin/time -f '%M' $C_executableFile < $input 2> $memory | head -c 8000000 > $output";
 
         $executionStartTime = microtime(true);
         shell_exec($runCmd);
         $executionEndTime = microtime(true);
+
+        $memory = (int)file_get_contents($this->file['memory']);
+        $this->processResultData['memory'] = $memory;
 
         $executionTotalTime              = sprintf('%0.3f', $executionEndTime - $executionStartTime);
         $this->processResultData['time'] = $executionTotalTime;
