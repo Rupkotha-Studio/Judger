@@ -4,7 +4,7 @@
  *
  */
 
-require 'app/page.php';
+require 'app/route.php';
 $GLOBALS['pageList'] = $pageList;
 class App
 {
