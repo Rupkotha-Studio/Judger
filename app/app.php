@@ -3,7 +3,6 @@
 /**
  *
  */
-
 require 'app/route.php';
 $GLOBALS['pageList'] = $pageList;
 class App

@@ -26,10 +26,10 @@ class Checker
     public function createCheckerFile()
     {
     	exec("mkdir -m 777 -p temp");
-        $this->makeFile($this->file['input'], $this->apiData['input']);
-        $this->makeFile($this->file['output'], $this->apiData['output']);
-        $this->makeFile($this->file['expectedOutput'], $this->apiData['expectedOutput']);
-        $this->makeFile($this->file['checker'], $this->apiData['checker']);
+        $this->makeFile(ff()->input, $this->apiData['input']);
+        $this->makeFile(ff()->output, $this->apiData['output']);
+        $this->makeFile(ff()->expectedOutput, $this->apiData['expectedOutput']);
+        $this->makeFile(ff()->checker, $this->apiData['checker']);
     }
 
     public function removeMergeFile()
@@ -50,13 +50,13 @@ class Checker
         //$cmd = "g++ --std=c++11 $fileName 2> spj_error.txt";
         //$out = shell_exec($cmd);
         //echo "$out";
-        return !file_exists($this->file['checker'])? $this->runNormalChecker():$this->runSpjChecker();
+        return !file_exists(ff()->checker)? $this->runNormalChecker():$this->runSpjChecker();
         
     }
 
     public function runNormalChecker(){
         $this->createNormalCheckerScript();
-        $checkerLogFile = $this->file['checkerLog'];
+        $checkerLogFile = ff()->checkerLog;
         $cmd = "bash temp/checker.sh > $checkerLogFile";
         shell_exec($cmd);
         $checkerLog = file_get_contents($checkerLogFile);
@@ -110,7 +110,7 @@ class Checker
 
     public function createNormalCheckerScript()
     {
-        shell_exec("cp src/lib/normalChecker/checker.sh temp");
+        shell_exec("cp ../src/lib/normalChecker/checker.sh temp");
     }
     public function getCheckerVerdict($checkerLog)
     {

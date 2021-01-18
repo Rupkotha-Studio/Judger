@@ -7,11 +7,18 @@ $file = [
     'output'                => "output.txt",
     'error'                 => "error.txt",
     'C_executableFile'      => "a.out",
-    'sourceCode'            => "",
     'compare'               => "compare.txt",
     'cppFile'               => "main.cpp",
     'cFile'                 => "main.c",
-    'memory'                 => "memory.txt",
+    'memory'                => "memory.txt",
+
+    'compiler_message'      => 'compiler_message.txt',
+
+    'cpp_program'              => 'program.cpp',
+    'cpp_run'               => 'a.out',
+
+    'c_compile'             => 'program.c',
+    'c_run'                 => 'a.out',
 
     //checker file
     'checker'               => "checker.cpp",
@@ -20,9 +27,5 @@ $file = [
     'checkerLog'            => "checker_log.txt",
 
 ];
-
-foreach ($file as $key => $value) {
-    $file[$key] = "temp/" . $value;
-}
 
 $GLOBALS['file'] = $file;

@@ -1,20 +1,19 @@
 body {
     background: #ffffff;
     font-family: "Exo 2";
-    padding: 5px 10px 5px 10px;
+    padding: 0px 10px 5px 10px;
     overflow-x: hidden;
 }
 .topTitleArea {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 .topTitle {
+    margin-top: -10px;
     font-size: 40px;
     font-weight: bold;
-    color: #2c3e50;
 }
 .topSubTitle {
     font-size: 18px;
-    color: #34495e;
     font-weight: bold;
 }
 .sourceEditor {
@@ -70,6 +69,7 @@ body {
     font-weight: bold;
     text-align: center;
     padding: 0px 20px 0px 20px;
+    z-index: 1200;
 }
 .apiResponseOutput {
     background-color: #ffffff;

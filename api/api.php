@@ -1,6 +1,13 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 
+if(empty($_POST)){
+
+    echo "Invalid Action";
+    return;
+}
+
+
 $includeFileList = [
     'src' => [
         'helper'  => [
@@ -39,7 +46,7 @@ $includeFileList = [
 function includeFile($includeFileData, $path = '')
 {
     if (!is_array($includeFileData)) {
-        $path .= $includeFileData . ".php";
+        $path = "../".$path . $includeFileData . ".php";
         if (file_exists($path)) {
             include "$path";
         }
@@ -53,3 +60,4 @@ function includeFile($includeFileData, $path = '')
 includeFile($includeFileList);
 
 $Api = new Api();
+

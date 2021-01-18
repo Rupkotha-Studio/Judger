@@ -11,9 +11,9 @@
 <script type="text/javascript" src="http://coderoj.com/style/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
 
-<?php 
-	$infoData = json_decode(file_get_contents("info.json"),true);
-	$version = $infoData['version'];	
+<?php
+$infoData = json_decode(file_get_contents("info.json"), true);
+$version  = $infoData['version'];
 ?>
 
 <script type="text/javascript">
@@ -28,52 +28,108 @@
 </head>
 <body>
 
-	<div class="containerr">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="topTitleArea">
-					<div class="topTitle">
+	<style type="text/css">
+		.ideNavbar{
+			background-color: #ffffff;
+			color: #000000;
+			min-height: 45px;
+			padding-top: 5px;
+		}
+		.ideNavbar input,select{
+			padding: 8px;
+			color: #000000;
+			background-color: #ffffff;
+			width: 200px;
+			border-radius: 5px;
+			border: 1px solid #CCCCCC;
+			margin-bottom: 5px;
+			margin-right: 5px;
+		}
+		.ideNavbar input:focus{
+			outline: none;
+			border: 1px solid #1678C2;
+		}
+		.ideNavbar select:focus{
+			outline: none;
+			border: 1px solid #1678C2;
+
+		}
+		textarea{
+			border-radius: 5px;
+			border: 1px solid #CCCCCC;
+			width: 100%;
+			resize: none;
+			height: 160px;
+			margin-bottom: 5px;
+			padding: 5px;
+		}
+
+		textarea:focus{
+			outline: none;
+		}
+
+		button{
+			width: 100px;
+			font-size: 16px;
+			padding: 9px;
+			border-radius: 5px;
+			border-width: 0px;
+			background-color: #1678C2;
+			color: #ffffff;
+			font-weight: bold;
+		}
+	</style>
+
+	<div class="row">
+		<div class="ideNavbar">
+			<div class="col-md-3">
+				<div class="topTitle">
 						CoderOJ
 						<span class="topSubTitle">Ide
 							<span class="pull-right" id="versionBtnArea" style="display: none"><button onclick="updateVersion()" id="updateVersionBtn"></button></span>
 						</span>
-						
 					</div>
-				</div>
-
+			</div>
+			<div class="col-md-9">
+				<select onchange="changeLanguage()" style="" id="language" class="">
+					<option value="C">C</option>
+					<option value="CPP">C++</option>
+					<option value="CPP11" selected="">C++11</option>
+				</select>
+				<input type="number" name="" style="" class="" id="timeLimit" value="2" placeholder="Time Limit">
+				<input type="number" style="" name="" class="" id="memoryLimit" value="128000" placeholder="Memory Limit">
+				<button id="runBtn" onclick="submitCode()"><i class="fas fa-play"></i> Run</button>
 			</div>
 
-			<div class="col-md-12">
-				
-				<div class="row">
-					<div class="col-md-6">
-						<select onchange="changeLanguage()" id="language" class="form-control selectLanguage">
-							<option value="C">C</option>
-							<option value="CPP">C++</option>
-							<option value="CPP11" selected="">C++11</option>
-						</select>
-					</div>
-					<div class="col-md-4">
-						<input type="number" name="" class="form-control" id="timeLimit" value="2" placeholder="Time Limit">
-						<input type="number" name="" class="form-control" id="memoryLimit" value="128000" placeholder="Memory Limit">
-					</div>
-					<div class="col-md-2">
-						<button id="runBtn" onclick="submitCode()">Run</button>
-					</div>
-				</div>
-				
-				
-			</div>
-			
-			<div class="col-md-6">
+		</div>
+	</div>
+
+	<div class="containerr">
+		<div class="row">
+
+			<div class="col-md-7">
+				<div class="fieldTitle">Enter Source Code</div>
 				<textarea class="sourceEditor" id="code" placeholder="Source Code"></textarea>
+				<div class="fieldTitle">Enter Checker Code</div>
 				<textarea rows="4" class="inputEditor1" id="checker" placeholder="Checker"></textarea>
 			</div>
-			<div class="col-md-6">
-
-				<textarea rows="4" class="inputEditor" id="input" placeholder="Input"></textarea>
-				<textarea rows="4" class="inputEditor" id="expectedOutput" placeholder="Expected Output"></textarea>
-				<textarea rows="4" class="inputEditor1" id="output" placeholder="output" readonly></textarea>
+			<div class="col-md-5">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="fieldTitle">Input</div>
+						<textarea rows="4" id="input" placeholder="Input"></textarea>
+					</div>
+					<div class="col-md-6">
+						<div class="fieldTitle">Expected Output</div>
+						<textarea rows="4" id="expectedOutput" placeholder="Expected Output"></textarea>
+					</div>
+					<div class="col-md-12">
+						<div class="fieldTitle">Output</div>
+						<textarea rows="4" id="output" placeholder="output" readonly></textarea>
+					</div>
+				</div>
+				
+				
 				<div id="outputResponse" style="margin-bottom: 10px;">Total Time: <br/>Total Memory:<br/>Status: <br/>Checker Log: </div>
 				<div id="debug" style="margin-bottom: 10px;"></div>
 			</div>
@@ -84,8 +140,8 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 </body>
 </html>
 
