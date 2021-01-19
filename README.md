@@ -1,5 +1,5 @@
 # Judger
-[![Judger Wallpaper](https://github.com/Coder-O-J/Judger/blob/master/public/file/editor.png?raw=true)](https://judger.coderoj.com)
+[![Judger Wallpaper](https://github.com/coderoj-dev/Judger/blob/master/.github/editor.png?raw=true)](https://judger.coderoj.com)
 ## Introduction
 CoderOJ Judeger is a linux based high performance programming problem solution judger that support multiple languages and special judge.
 ## Overview
