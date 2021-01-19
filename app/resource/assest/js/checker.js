@@ -2,7 +2,7 @@ $(document).ready(function() {
     setFieldVal();
     setCheckerEditor();
 });
-var apiUrl = "index.php?api";
+var apiUrl = "api/api.php";
 var checkerEditor;
 var checkerCode, input, output, answer;
 
@@ -46,8 +46,8 @@ function runChecker() {
         checker: btoa(checkerEditor.getValue()),
         input: btoa($("#input").val()),
         output: btoa($("#output").val()),
-        expectedOutput: btoa($("#expectedOutput").val()),
-        apiType: "checker"
+        expected_output: btoa($("#expectedOutput").val()),
+        api_type: "checker"
     }
     $("#runBtn").html("Running....");
     $("#runBtn").prop("disabled", true);

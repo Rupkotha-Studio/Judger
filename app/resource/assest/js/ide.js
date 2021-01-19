@@ -5,9 +5,10 @@ $(document).ready(function() {
 });
 var sourceCodeEditor;
 var checkerEditor;
-var apiUrl = "index.php?api";
+var apiUrl = "api/api.php";
 
 function checkNeedUpdate() {
+    return;
     $.get(gitInfoUrl, "", function(response) {
         response = JSON.parse(response);
         githubVersion = response.version;
@@ -17,7 +18,6 @@ function checkNeedUpdate() {
         }
     });
 }
-
 setTimeout(function() {
     checkNeedUpdate();
 }, 3000);
@@ -26,6 +26,7 @@ function updateVersion() {
     var data = {
         'updateVersion': 1
     }
+    return;
     $("#updateVersionBtn").html("Updating...");
     $("#updateVersionBtn").prop("disabled", true);
     $.post("ajax_request.php", data, function(response) {
@@ -35,20 +36,15 @@ function updateVersion() {
 }
 
 function submitCode() {
-    var timeLimit = $("#timeLimit").val();
-    if (timeLimit == "") {
-        alert("Enter Time Limit");
-        return;
-    }
     var data1 = {
-        sourceCode: btoa(sourceCodeEditor.getValue()),
+        source_code: btoa(sourceCodeEditor.getValue()),
         input: btoa($("#input").val()),
-        expectedOutput: btoa($("#expectedOutput").val()),
+        expected_output: btoa($("#expectedOutput").val()),
         language: $("#language").val(),
-        timeLimit: $("#timeLimit").val(),
-        memoryLimit: $("#memoryLimit").val(),
+        time_limit: $("#timeLimit").val(),
+        memory_limit: $("#memoryLimit").val(),
         checker: btoa(checkerEditor.getValue()),
-        apiType: "compile"
+        api_type: "submission"
     }
     var data = {};
     data['createSubmission'] = data1;
@@ -56,27 +52,32 @@ function submitCode() {
     $("#runBtn").html("Running...");
     $("#runBtn").prop("disabled", true);
     $.post(apiUrl, data1, function(response) {
+        $("#runBtn").html("Run");
+        $("#runBtn").prop("disabled", false);
         processApiResponseData(response);
+    }).fail(function(error) {
+        $("#runBtn").html("Run");
+        $("#runBtn").prop("disabled", false);
+        $("#outputResponse").html(error.responseText);
     });
 }
 
 function processApiResponseData(response) {
-    $("#runBtn").html("Run");
-    $("#runBtn").prop("disabled", false);
     $("#debug").html(response);
     response = JSON.parse(response);
     if (typeof response.error == 'undefined') {
-        if (response.status.status == "CE" || response.status.status == "MLE" ||  response.status.status == "RTE") $("#output").val(atob(response.compileMessage));
+        //  console.log(response.status.status);
+        if (response.status.status == "CE" || response.status.status == "MLE" || response.status.status == "RTE") $("#output").val(response.checkerLog);
         else $("#output").val(atob(response.output));
-        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Total Memory: "+response.memory+"<br/>Status: " + response.status.description + "<br/>Checker Log: " + response.checkerLog);
+        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Total Memory: " + response.memory + "<br/>Status: " + response.status.description + "<br/>Checker Log: " + response.checkerLog);
     } else $("#outputResponse").html(response.errorMsg);
 }
 
 function setCodeEditor() {
     sourceCodeEditor = ace.edit("code");
     sourceCodeEditor.setShowPrintMargin(false);
-    sourceCodeEditor.setOption("maxLines", 18);
-    sourceCodeEditor.setOption("minLines", 18);
+    sourceCodeEditor.setOption("maxLines", 23);
+    sourceCodeEditor.setOption("minLines", 23);
     sourceCodeEditor.setReadOnly(false);
     sourceCodeEditor.setFontSize("14px");
 }
@@ -84,8 +85,8 @@ function setCodeEditor() {
 function setCheckerEditor() {
     checkerEditor = ace.edit("checker");
     checkerEditor.setShowPrintMargin(false);
-    checkerEditor.setOption("maxLines", 18);
-    checkerEditor.setOption("minLines", 18);
+    checkerEditor.setOption("maxLines", 15);
+    checkerEditor.setOption("minLines", 15);
     checkerEditor.setReadOnly(false);
     checkerEditor.setFontSize("14px");
     checkerEditor.setValue(checkEditorCode);

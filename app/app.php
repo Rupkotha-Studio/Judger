@@ -3,9 +3,17 @@
 /**
  *
  */
-
-require 'app/route.php';
+require 'app/route/route.php';
 $GLOBALS['pageList'] = $pageList;
+
+function assest($file){
+    echo "app/resource/assest/$file";
+}
+
+function view($file){
+    return "app/resource/views/$file";
+}
+
 class App
 {
     private $pageList = array();
@@ -20,10 +28,10 @@ class App
     {
         foreach ($this->pageList as $key => $value) {
             if (isset($_GET[$key])) {
-                include "public/views/$value.php";
+                include "app/resource/views/$value.php";
                 return;
             }
         }
-        include "public/views/welcome.php";
+        include "app/resource/views/welcome.php";
     }
 }
