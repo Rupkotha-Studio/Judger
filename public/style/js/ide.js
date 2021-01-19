@@ -8,6 +8,7 @@ var checkerEditor;
 var apiUrl = "api/api.php";
 
 function checkNeedUpdate() {
+    return;
     $.get(gitInfoUrl, "", function(response) {
         response = JSON.parse(response);
         githubVersion = response.version;
@@ -25,6 +26,7 @@ function updateVersion() {
     var data = {
         'updateVersion': 1
     }
+    return;
     $("#updateVersionBtn").html("Updating...");
     $("#updateVersionBtn").prop("disabled", true);
     $.post("ajax_request.php", data, function(response) {

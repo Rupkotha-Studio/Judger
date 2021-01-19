@@ -3,14 +3,8 @@
 class SandBox
 {
 
-    public $Compiler;
-    public $apiData;
-    public $compileData;
-
     public function __construct()
     {
-        $this->apiData = $_POST;
-        
         $this->compile();
     }
 
@@ -22,12 +16,13 @@ class SandBox
         $this->processData();
         $this->removeMergeFile();
     }
+
     public function makeMergeFile()
     {
         exec("mkdir -m 777 -p temp");
-        File::create(ff()->output);
         File::create(ff()->input, request()->input);
-        File::create(ff()->expectedOutput, request()->expected_output);
+        File::create(ff()->output);
+        File::create(ff()->expected_output, request()->expected_output);
         File::create(ff()->compare);
         File::create(ff()->memory);
     }
@@ -36,7 +31,6 @@ class SandBox
     {
         exec("rm -R temp");
     }
-
 
     public function processData()
     {

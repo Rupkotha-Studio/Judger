@@ -12,6 +12,7 @@ class CompilerEngin
     public function run($cmd = null)
     {
         if (response()->compilerMessage != "") {
+            response()->status = 'CE';
             return;
         }
 
@@ -20,7 +21,7 @@ class CompilerEngin
         $output  = ff()->output;
         $timeout = request()->time_limit + 0.1;
 
-        $cmd     = "timeout {$timeout}s /usr/bin/time -f '%M' {$cmd} < {$input} 2> {$memory} | head -c 8000000 > {$output}";
+        $cmd = "timeout {$timeout}s /usr/bin/time -f '%M' {$cmd} < {$input} 2> {$memory} | head -c 8000000 > {$output}";
 
         $start = microtime(true);
         shell_exec($cmd);

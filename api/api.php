@@ -1,16 +1,14 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 
-if(empty($_POST)){
-
+if (empty($_POST)) {
     echo "Invalid Action";
     return;
 }
 
-
 $includeFileList = [
     'src' => [
-        'helper'  => [
+        'Helper'  => [
             'FileData',
             'File',
             'RequestService',
@@ -20,25 +18,27 @@ $includeFileList = [
             'Lib',
             'Validation',
         ],
-        'api'     => [
-            'api',
+        'Api'     => [
+            'Api',
         ],
-        'sandbox' => [
-            'checker'  => [
-                'checker',
+        'Sandbox' => [
+            'Checker'  => [
+                'Checker',
             ],
-            'verdict'  => [
-                'verdict',
+            'Verdict'  => [
+                'Verdict',
             ],
-            'compiler' => [
+            'Compiler' => [
                 'Compiler',
-                'CompilerEngin',
                 'Engin' => [
+                    'CompilerEngin',
                     'CPP',
                     'CPP11',
+                    'C',
+
                 ],
             ],
-            'sandbox',
+            'Sandbox',
         ],
     ],
 ];
@@ -46,7 +46,7 @@ $includeFileList = [
 function includeFile($includeFileData, $path = '')
 {
     if (!is_array($includeFileData)) {
-        $path = "../".$path . $includeFileData . ".php";
+        $path = "../" . $path . $includeFileData . ".php";
         if (file_exists($path)) {
             include "$path";
         }
@@ -60,4 +60,3 @@ function includeFile($includeFileData, $path = '')
 includeFile($includeFileList);
 
 $Api = new Api();
-

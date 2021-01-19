@@ -49,9 +49,7 @@ class Verdict
 
     public function checkCompilationError()
     {
-        if (!File::has(ff()->C_executableFile)) {
-            response()->status = "CE";
-        }
+        
     }
 
     public function checkRunTimeError()
@@ -113,7 +111,7 @@ class Verdict
     public function compareOutput()
     {
         File::trim(ff()->output);
-        File::trim(ff()->expectedOutput);
+        File::trim(ff()->expected_output);
         return $this->checker();
     }
 
