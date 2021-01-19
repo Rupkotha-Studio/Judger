@@ -4,12 +4,20 @@
  */
 class Checker
 {
+    public function __construct()
+    {
+        if (request()->api_type == 'checker') {
+            $this->buildChecker();
+        }
+    }
     public function buildChecker()
     {
         $this->createCheckerFile();
         $checkerData = $this->runChecker();
         $this->removeMergeFile();
-        return $checkerData;
+        response()->checkerLog     = $checkerData['checkerLog'];
+        response()->checkerVerdict = $checkerData['checkerVerdict'];
+        response()->checkerError   = $checkerData['checkerError'];
     }
 
     public function createCheckerFile()

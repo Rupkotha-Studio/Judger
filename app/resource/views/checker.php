@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="http://coderoj.com/style/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://coderoj.com/style/lib/font-awesome/css/font-awesome.css">
 
-<link rel="stylesheet" type="text/css" href="public/style/css/style.css">
+<link rel="stylesheet" type="text/css" href="<?php assest('css/style.css') ?>">
 <script type="text/javascript" src="http://coderoj.com/style/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
 
@@ -43,7 +43,7 @@ $version  = $infoData['version'];
 
 			</div>
 
-			<?php include "public/views/checker_editor.php";?>
+			<?php include view("checker_editor.php");?>
 
 
 		</div>
@@ -56,4 +56,4 @@ $version  = $infoData['version'];
 </body>
 </html>
 
-<script type="text/javascript" src="public/style/js/checker.js"></script>
+<script type="text/javascript" src="<?php assest('js/checker.js') ?>"></script>

@@ -10,6 +10,10 @@ function assest($file){
     echo "app/resource/assest/$file";
 }
 
+function view($file){
+    return "app/resource/views/$file";
+}
+
 class App
 {
     private $pageList = array();
