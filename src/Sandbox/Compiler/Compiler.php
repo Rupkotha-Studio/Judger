@@ -12,7 +12,7 @@ class Compiler
         if (in_array($language, $this->compilerList)) {
             new $language();
         } else {
-            response()->status = "LE";
+            response()->status = "LR";
         }
     }
 }

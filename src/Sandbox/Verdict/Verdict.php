@@ -18,28 +18,40 @@ class Verdict
     {
         $verdictList = [
             'AC'  => [
+                'id'          => 3,
                 'description' => 'Accepted',
             ],
             'WA'  => [
+                'id'          => 4,
                 'description' => 'Wrong Answer',
             ],
             'TLE' => [
+                'id'          => 5,
                 'description' => 'Time Limit Exceeded',
             ],
             'CE'  => [
+                'id'          => 6,
                 'description' => 'Compilation Error',
             ],
             'RTE' => [
+                'id'          => 7,
                 'description' => 'Runtime Error',
             ],
-            'OLE' => [
-                'description' => 'Output Limit Exceeded',
-            ],
             'MLE' => [
+                'id'          => 8,
                 'description' => 'Memory Limit Exceeded',
             ],
-            'LE'  => [
-                'description' => 'Language Error',
+            'OLE' => [
+                'id'          => 10,
+                'description' => 'Output Limit Exceeded',
+            ],
+            'LR'  => [
+                'id'          => 11,
+                'description' => 'Language Restricted',
+            ],
+            'IE'  => [
+                'id'          => 12,
+                'description' => 'Internal Error',
             ],
         ];
         $status                      = response()->status;
@@ -49,7 +61,7 @@ class Verdict
 
     public function checkCompilationError()
     {
-        
+
     }
 
     public function checkRunTimeError()
