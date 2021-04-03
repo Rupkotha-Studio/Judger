@@ -35,7 +35,10 @@ class SandBox
     public function processData()
     {
         new Verdict();
+
         response()->output     = Lib::compressString(File::read(ff()->output), 3000);
-        response()->checkerLog = (response()->status == "CE" || response()->status == "RTE") ? response()->compilerMessage : response()->checkerLog;
+        response()->checkerLog = (response()->status['status'] == "CE" || response()->status['status'] == "RTE") ? response()->compilerMessage : response()->checkerLog;
+
+
     }
 }
