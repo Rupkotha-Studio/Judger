@@ -13,6 +13,8 @@ $file = [
     'cpp_program'             => 'program.cpp',
     'cpp_run'                 => 'a.out',
 
+    'java_program'            => 'program.java',
+
     'c_program'               => 'program.c',
     'c_run'                   => 'a.out',
 
@@ -21,6 +23,7 @@ $file = [
     'checker_error'           => "checker_error.txt",
     'checker_executable_file' => "checker.out",
     'checker_log'             => "checker_log.txt",
+    'bash_checker'            => 'checker.sh',
 
 ];
 

@@ -8,6 +8,17 @@ class File
     public function __construct()
     {
         $this->storeFileData();
+        $this->createHash();
+    }
+
+    public function createHash($len=6){
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $randomString = "";
+        for ($i = 0; $i < $len; $i++) { 
+            $index = rand(0, strlen($characters) - 1); 
+            $randomString .= $characters[$index]; 
+        }
+        return $randomString;
     }
 
     public static function getInstance()
@@ -22,12 +33,12 @@ class File
     public function storeFileData()
     {
         $file = $GLOBALS['file'];
-        $hsh = rand();
+        $hsh = "_".rand();
         foreach ($file as $key => $value) {
             $fileName = new SplFileInfo($value);
             $extension = '.'.$fileName->getExtension();
             $fileName = $fileName->getBasename($extension);
-            $this->$key = $this->tempFileFolder . $fileName . $extension;
+            $this->$key = $this->tempFileFolder . $fileName . $hsh . $extension;
         }
         $this->busy = 'busy.txt';
     }

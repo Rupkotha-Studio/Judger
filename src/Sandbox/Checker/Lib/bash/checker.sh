@@ -1,7 +1,7 @@
 
-outputFile="temp/output.txt"
-expectedOutputFile="temp/expected_output.txt"
-diffFile="temp/compare.txt"
+outputFile=$1
+expectedOutputFile=$2
+diffFile=$3
 
 compress () {
 	line=$1
@@ -30,8 +30,8 @@ diff "$outputFile" "$expectedOutputFile" > "$diffFile"
 
 if [ -s "$diffFile" ]
 then
-	mapfile -t outputList < "temp/output.txt"
-	mapfile -t expectedList < "temp/expected_output.txt"
+	mapfile -t outputList < "$outputFile"
+	mapfile -t expectedList < "$expectedOutputFile"
 	# all lines
 	lenOutFile=${#outputList[@]}
 	lenExpFile=${#expectedList[@]}

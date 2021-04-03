@@ -4,7 +4,7 @@ class JAVA extends CompilerEngin
 {
     public function __construct()
     {
-        $sourceCode = "temp/program.java";
+        $sourceCode = ff()->java_program;
         File::create($sourceCode, request()->source_code);
 
         $this->compile("javac {$sourceCode}");

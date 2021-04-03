@@ -43,7 +43,11 @@ class Checker
     {
         $this->createNormalCheckerScript();
         $checkerLogFile = ff()->checker_log;
-        $cmd            = "bash temp/checker.sh > $checkerLogFile";
+        $outputFile = ff()->output;
+        $expectedOutputFile = ff()->expected_output;
+        $compareFile = ff()->compare;
+        $checkerFile = ff()->bash_checker;
+        $cmd            = "bash {$checkerFile} {$outputFile} {$expectedOutputFile} {$compareFile} > $checkerLogFile";
         shell_exec($cmd);
         $checkerLog = file_get_contents($checkerLogFile);
         return [
@@ -96,7 +100,8 @@ class Checker
 
     public function createNormalCheckerScript()
     {
-        shell_exec("cp ../src/Sandbox/Checker/Lib/bash/checker.sh temp");
+        $bashChecker = ff()->bash_checker;
+        shell_exec("cp ../src/Sandbox/Checker/Lib/bash/checker.sh {$bashChecker}");
 
     }
     public function getCheckerVerdict($checkerLog)
