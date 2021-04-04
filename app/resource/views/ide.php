@@ -137,7 +137,7 @@ $version  = $infoData['version'];
 		</div>
 		<div class="col-md-12">
 			<div class="footer">
-				<?php echo "Compiler Version: $version"; ?>
+				<?php echo "Judger Version: $version"; ?>
 			</div>
 		</div>
 	</div>

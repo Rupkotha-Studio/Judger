@@ -154,22 +154,9 @@ main :- write('hello, world\\n').\n\
 ";
 var pythonSource = "print(\"hello, world\")";
 var javaTestSource = "\
-import static org.junit.jupiter.api.Assertions.assertEquals;\n\
-\n\
-import org.junit.jupiter.api.Test;\n\
-\n\
-class MainTest {\n\
-    static class Calculator {\n\
-        public int add(int x, int y) {\n\
-            return x + y;\n\
-        }\n\
-    }\n\
-\n\
-    private final Calculator calculator = new Calculator();\n\
-\n\
-    @Test\n\
-    void addition() {\n\
-        assertEquals(2, calculator.add(1, 1));\n\
+class Main {\n\
+    public static void main(String[] args) throws Exception {\n\
+        System.out.println(\"hello, world\");\n\
     }\n\
 }\n\
 ";
