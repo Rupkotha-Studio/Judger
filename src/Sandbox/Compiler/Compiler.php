@@ -3,7 +3,7 @@
 class Compiler
 {
     private $compilerList = [
-        'C', 'CPP', 'CPP11','JAVA',
+        'C', 'CPP', 'CPP11','JAVA','PYTHON2',
     ];
     public function __construct()
     {

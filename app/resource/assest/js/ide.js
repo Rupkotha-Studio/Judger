@@ -101,6 +101,7 @@ function changeLanguage() {
     if (language == "CPP") editorCode = cppSource;
     if (language == "CPP11") editorCode = cppSource;
     if (language == "JAVA") editorCode = javaTestSource;
+    if (language == "PYTHON2" || language == "PYTHON3") editorCode = pythonSource;
     $("#code").val(editorCode);
     sourceCodeEditor.setValue(editorCode);
     sourceCodeEditor.clearSelection();

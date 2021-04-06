@@ -9,6 +9,7 @@ class Response
     public $time       = 0;
     public $memory     = 0;
     public $checkerLog = "";
+    public $compilerMessage = "";
 
     public static function getInstance()
     {

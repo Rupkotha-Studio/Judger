@@ -15,6 +15,8 @@ $file = [
 
     'java_program'            => 'program.java',
 
+    'python_program'          => 'program.py',
+
     'c_program'               => 'program.c',
     'c_run'                   => 'a.out',
 
