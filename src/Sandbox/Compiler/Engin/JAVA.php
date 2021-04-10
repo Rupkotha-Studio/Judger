@@ -6,12 +6,8 @@ class JAVA extends CompilerEngin
     {
         $sourceCode = ff()->java_program;
         File::create($sourceCode, request()->source_code);
-
-        $this->compile("javac {$sourceCode}");
-
-        $executeFileName = trim(shell_exec('find -iname *.class | sed "s/.*\///; s/\.class//" | head -n 1'));
-        $executeCmd      = "java -cp temp {$executeFileName}";
-
+        $executeCmd      = "java {$sourceCode}";
+        
         $this->run($executeCmd);
     }
 }

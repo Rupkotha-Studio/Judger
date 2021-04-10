@@ -59,9 +59,28 @@ class Verdict
         response()->status['status'] = $status;
     }
 
+    public function getLastLines($string, $n = 4)
+    {
+        $lines = explode("\n", $string);
+        $lines = array_slice($lines, -$n);
+        return implode("\n", $lines);
+    }
+
     public function checkCompilationError()
     {
-
+        if (strtoupper(request()->language) == "JAVA") {
+            //in java program the error area always show error: compilation failed if compiled failed
+            if (preg_match("/[a-z]/i", strtolower(response()->memory))) {
+                $errors = explode("\n", response()->memory);
+                foreach ($errors as $key => $value) {
+                    if($value == "error: compilation failed"){
+                        response()->compilerMessage = response()->memory;
+                        response()->status = "CE";
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public function checkRunTimeError()
@@ -136,7 +155,10 @@ class Verdict
 
     public function createCheckerFile()
     {
-        if(!isset(request()->checker))return;
+        if (!isset(request()->checker)) {
+            return;
+        }
+
         if (trim(request()->checker) != "") {
             File::create(ff()->checker, request()->checker);
         }
