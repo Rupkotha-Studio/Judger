@@ -59,13 +59,6 @@ class Verdict
         response()->status['status'] = $status;
     }
 
-    public function getLastLines($string, $n = 4)
-    {
-        $lines = explode("\n", $string);
-        $lines = array_slice($lines, -$n);
-        return implode("\n", $lines);
-    }
-
     public function checkCompilationError()
     {
         if (strtoupper(request()->language) == "JAVA") {
@@ -141,8 +134,6 @@ class Verdict
 
     public function compareOutput()
     {
-        File::trim(ff()->output);
-        File::trim(ff()->expected_output);
         return $this->checker();
     }
 

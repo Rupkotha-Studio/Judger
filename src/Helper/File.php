@@ -33,11 +33,11 @@ class File
     public function storeFileData()
     {
         $file = $GLOBALS['file'];
-        $hsh = "_".rand();
         foreach ($file as $key => $value) {
             $fileName = new SplFileInfo($value);
             $extension = '.'.$fileName->getExtension();
             $fileName = $fileName->getBasename($extension);
+            $hsh = "_".rand();
             $this->$key = $this->tempFileFolder . $fileName . $hsh . $extension;
         }
         $this->busy = 'busy.txt';

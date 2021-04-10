@@ -42,12 +42,15 @@ class Checker
     public function runNormalChecker()
     {
         $this->createNormalCheckerScript();
-        $checkerLogFile = ff()->checker_log;
-        $outputFile = ff()->output;
+        $checkerLogFile     = ff()->checker_log;
+        $outputFile         = ff()->output;
         $expectedOutputFile = ff()->expected_output;
-        $compareFile = ff()->compare;
-        $checkerFile = ff()->bash_checker;
-        $cmd            = "bash {$checkerFile} {$outputFile} {$expectedOutputFile} {$compareFile} > $checkerLogFile";
+        $compareFile        = ff()->compare;
+        $checkerFile        = ff()->bash_checker;
+        $input          = ff()->input;
+
+        $cmd                = "./temp/checker {$input} {$outputFile} {$expectedOutputFile} 2> $checkerLogFile";
+        
         shell_exec($cmd);
         $checkerLog = file_get_contents($checkerLogFile);
         return [
@@ -100,9 +103,7 @@ class Checker
 
     public function createNormalCheckerScript()
     {
-        $bashChecker = ff()->bash_checker;
-        shell_exec("cp ../src/Sandbox/Checker/Lib/bash/checker.sh {$bashChecker}");
-
+        shell_exec("cp ../src/Sandbox/Checker/Lib/testlib/default_checker/checker temp");
     }
     public function getCheckerVerdict($checkerLog)
     {
