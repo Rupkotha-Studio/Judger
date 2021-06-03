@@ -6,12 +6,12 @@ class CompilerEngin
     public function compile($cmd = null)
     {
         shell_exec("{$cmd} 2> " . ff()->compiler_message);
-        response()->compilerMessage = trim(File::read(ff()->compiler_message));
+        response()->compiler_log = trim(File::read(ff()->compiler_message));
     }
 
     public function run($cmd = null)
     {
-        if (response()->compilerMessage != "") {
+        if (response()->compiler_log != "") {
             response()->status = 'CE';
             return;
         }

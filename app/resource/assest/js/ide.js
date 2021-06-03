@@ -83,9 +83,9 @@ function processApiResponseData(response) {
     response = JSON.parse(response);
     if (typeof response.error == 'undefined') {
         //  console.log(response.status.status);
-        if (response.status.status == "CE" || response.status.status == "MLE" || response.status.status == "RTE") $("#output").val(response.checkerLog);
+        if (response.status.status == "CE" || response.status.status == "MLE" || response.status.status == "RTE") $("#output").val(response.compiler_log);
         else $("#output").val(atob(response.output));
-        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Total Memory: " + response.memory + "<br/>Status: " + response.status.description + "<br/>Checker Log: " + response.checkerLog);
+        $("#outputResponse").html("Total Time: " + response.time + " s<br/>Total Memory: " + response.memory + "<br/>Status: " + response.status.description + "<br/>Checker Log: " + (response.checker_log ? response.checker_log: ""));
     } else $("#outputResponse").html(response.errorMsg);
 }
 

@@ -67,7 +67,7 @@ class Verdict
                 $errors = explode("\n", response()->memory);
                 foreach ($errors as $key => $value) {
                     if($value == "error: compilation failed"){
-                        response()->compilerMessage = response()->memory;
+                        response()->compiler_log = response()->memory;
                         response()->status = "CE";
                         break;
                     }
@@ -81,7 +81,7 @@ class Verdict
         if (isset(response()->status)) {
             return;
         }
-        if (trim(response()->compilerMessage) != "") {
+        if (trim(response()->compiler_log) != "") {
             response()->status = "RTE";
         }
         if (preg_match("/[a-z]/i", strtolower(response()->memory))) {
@@ -129,7 +129,7 @@ class Verdict
         $checkerData = $this->compareOutput();
 
         response()->status     = $checkerData['checkerVerdict'] ? "AC" : "WA";
-        response()->checkerLog = $checkerData['checkerLog'];
+        response()->checker_log = $checkerData['checkerLog'];
     }
 
     public function compareOutput()

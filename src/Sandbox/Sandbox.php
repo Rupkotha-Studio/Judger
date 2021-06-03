@@ -37,8 +37,6 @@ class SandBox
         new Verdict();
 
         response()->output     = Lib::compressString(File::read(ff()->output), 3000);
-        response()->checkerLog = (response()->status['status'] == "CE" || response()->status['status'] == "RTE") ? response()->compilerMessage : response()->checkerLog;
-
 
     }
 }
