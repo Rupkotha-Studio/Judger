@@ -43,10 +43,11 @@ function eraseCookie(name) {
 
 function runChecker() {
     var data = {
-        checker: btoa(checkerEditor.getValue()),
         input: btoa($("#input").val()),
         output: btoa($("#output").val()),
         expected_output: btoa($("#expectedOutput").val()),
+        checker_type: "custom",
+        custom_checker: btoa(checkerEditor.getValue()),
         api_type: "checker"
     }
     $("#runBtn").html("Running....");

@@ -35,7 +35,19 @@ function updateVersion() {
     });
 }
 
+function selectChecker(type){
+    if(type == "default"){
+        $("#custom_checker").hide();
+        $("#default_checker").show();
+    }
+    else{
+        $("#default_checker").hide();
+        $("#custom_checker").show();
+    }
+}
+
 function submitCode() {
+
     var data1 = {
         source_code: btoa(sourceCodeEditor.getValue()),
         input: btoa($("#input").val()),
@@ -43,9 +55,13 @@ function submitCode() {
         language: $("#language").val(),
         time_limit: $("#timeLimit").val(),
         memory_limit: $("#memoryLimit").val(),
-        checker: btoa(checkerEditor.getValue()),
+        checker_type: $('input[name="checker_type"]:checked').val(),
+        custom_checker: btoa(checkerEditor.getValue()),
+        default_checker: $("#select_default_checker").val(),
         api_type: "submission"
     }
+    console.log(data1);
+    //return;
     var data = {};
     data['createSubmission'] = data1;
     console.log(data);
@@ -85,8 +101,8 @@ function setCodeEditor() {
 function setCheckerEditor() {
     checkerEditor = ace.edit("checker");
     checkerEditor.setShowPrintMargin(false);
-    checkerEditor.setOption("maxLines", 15);
-    checkerEditor.setOption("minLines", 15);
+    checkerEditor.setOption("maxLines", 13);
+    checkerEditor.setOption("minLines", 13);
     checkerEditor.setReadOnly(false);
     checkerEditor.setFontSize("14px");
     checkerEditor.setValue(checkEditorCode);

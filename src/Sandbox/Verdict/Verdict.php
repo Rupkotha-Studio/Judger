@@ -139,19 +139,8 @@ class Verdict
 
     public function checker()
     {
-        $this->createCheckerFile();
         $Checker = new Checker();
         return $Checker->runChecker();
     }
 
-    public function createCheckerFile()
-    {
-        if (!isset(request()->checker)) {
-            return;
-        }
-
-        if (trim(request()->checker) != "") {
-            File::create(ff()->checker, request()->checker);
-        }
-    }
 }

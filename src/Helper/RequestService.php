@@ -14,7 +14,7 @@ class RequestService
     public function decode()
     {
         $baseDecodeList = [
-            'source_code', 'input', 'expected_output', 'output', 'checker',
+            'source_code', 'input', 'expected_output', 'output', 'custom_checker',
         ];
         foreach ($baseDecodeList as $key => $value) {
             if (isset(request()->$value)) {

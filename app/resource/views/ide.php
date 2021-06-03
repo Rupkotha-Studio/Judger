@@ -112,8 +112,21 @@ $version  = $infoData['version'];
 			<div class="col-md-7">
 				<div class="fieldTitle">Enter Source Code</div>
 				<textarea class="sourceEditor" id="code" placeholder="Source Code"></textarea>
-				<div class="fieldTitle">Enter Checker Code</div>
-				<textarea rows="4" class="inputEditor1" id="checker" placeholder="Checker"></textarea>
+				<div id="checker_area">
+					<span style="margin-right: 5px" class="fieldTitle">Select Checker Type: </span> <input onchange="selectChecker('default')" type="radio" name="checker_type" value="default" id="default_check_box" checked=""> <label style="margin-right: 10px;" class="form-check-label" for="default_check_box">Default</label>
+					<input type="radio" name="checker_type" value="custom" onchange="selectChecker('custom')" id="custom_check_box"> <label class="form-check-label" for="custom_check_box">Custom</label><br/>
+					<div id="default_checker">
+						<select id="select_default_checker" style="margin-top: 10px;margin-left: 15px;" class="">
+							<option value="lcmp">lcmp</option>
+							<option value="yesno">yesno</option>
+						</select>
+					</div>
+					<div id="custom_checker" style="display: none;">
+						<div class="fieldTitle">Enter Checker Code</div>
+						<textarea rows="4" class="inputEditor1" id="checker" placeholder="Checker"></textarea>
+					</div>
+				</div>
+				
 			</div>
 			<div class="col-md-5">
 				<div class="row">

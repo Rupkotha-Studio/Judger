@@ -26,7 +26,7 @@ class Checker
         File::create(ff()->input, request()->input);
         File::create(ff()->output, request()->output);
         File::create(ff()->expected_output, request()->expected_output);
-        File::create(ff()->checker, request()->checker);
+
     }
 
     public function removeMergeFile()
@@ -36,21 +36,34 @@ class Checker
 
     public function runChecker()
     {
-        return !file_exists(ff()->checker) ? $this->runNormalChecker() : $this->runSpjChecker();
+        if (request()->checker_type == "custom") {
+            File::create(ff()->checker, request()->custom_checker);
+            return $this->runSpjChecker();
+        } else {
+            $dafaultCheckersList = [
+                'lcmp','yesno'
+            ];
+            $checkerPos = array_search(request()->default_checker,$dafaultCheckersList);
+            $checkerPos = $checkerPos ? $checkerPos : 0;
+            $checker = $dafaultCheckersList[$checkerPos];
+            return $this->runDefaultChecker($checker);
+        }
     }
 
-    public function runNormalChecker()
+    public function runDefaultChecker($checker)
     {
-        $this->createNormalCheckerScript();
         $checkerLogFile     = ff()->checker_log;
         $outputFile         = ff()->output;
         $expectedOutputFile = ff()->expected_output;
         $compareFile        = ff()->compare;
         $checkerFile        = ff()->bash_checker;
-        $input          = ff()->input;
+        $input              = ff()->input;
 
-        $cmd                = "./temp/checker {$input} {$outputFile} {$expectedOutputFile} 2> $checkerLogFile";
-        
+        //copy default checker file
+        shell_exec("cp ../src/Sandbox/Checker/Lib/testlib/default_checker/{$checker} temp");
+
+        $cmd = "./temp/{$checker} {$input} {$outputFile} {$expectedOutputFile} 2> $checkerLogFile";
+
         shell_exec($cmd);
         $checkerLog = file_get_contents($checkerLogFile);
         return [
@@ -101,10 +114,6 @@ class Checker
         shell_exec("cp ../src/Sandbox/Checker/Lib/testlib/testlib.h temp");
     }
 
-    public function createNormalCheckerScript()
-    {
-        shell_exec("cp ../src/Sandbox/Checker/Lib/testlib/default_checker/checker temp");
-    }
     public function getCheckerVerdict($checkerLog)
     {
         if (strlen($checkerLog) < 2) {
