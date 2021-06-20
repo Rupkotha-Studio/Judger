@@ -81,11 +81,14 @@ class Verdict
         if (isset(response()->status)) {
             return;
         }
+        
         if (trim(response()->compiler_log) != "") {
             response()->status = "RTE";
+            response()->compiler_log = response()->memory;
         }
         if (preg_match("/[a-z]/i", strtolower(response()->memory))) {
             response()->status = "RTE";
+            response()->compiler_log = response()->memory;
         }
     }
 
