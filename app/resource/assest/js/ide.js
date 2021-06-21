@@ -58,6 +58,8 @@ function submitCode() {
         checker_type: $('input[name="checker_type"]:checked').val(),
         custom_checker: btoa(checkerEditor.getValue()),
         default_checker: $("#select_default_checker").val(),
+        compile_file: "test_compile",
+        delete_compile_file: 1,
         api_type: "submission"
     }
     console.log(data1);

@@ -11,12 +11,13 @@ class File
         $this->createHash();
     }
 
-    public function createHash($len=6){
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+    public function createHash($len = 6)
+    {
+        $characters   = '0123456789abcdefghijklmnopqrstuvwxyz';
         $randomString = "";
-        for ($i = 0; $i < $len; $i++) { 
-            $index = rand(0, strlen($characters) - 1); 
-            $randomString .= $characters[$index]; 
+        for ($i = 0; $i < $len; $i++) {
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
         }
         return $randomString;
     }
@@ -34,10 +35,10 @@ class File
     {
         $file = $GLOBALS['file'];
         foreach ($file as $key => $value) {
-            $fileName = new SplFileInfo($value);
-            $extension = '.'.$fileName->getExtension();
-            $fileName = $fileName->getBasename($extension);
-            $hsh = "_".rand();
+            $fileName   = new SplFileInfo($value);
+            $extension  = '.' . $fileName->getExtension();
+            $fileName   = $fileName->getBasename($extension);
+            $hsh        = "_" . rand();
             $this->$key = $this->tempFileFolder . $fileName . $hsh . $extension;
         }
         $this->busy = 'busy.txt';
@@ -79,6 +80,12 @@ class File
     public static function read($fileName)
     {
         return file_get_contents($fileName);
+    }
+
+    public static function copy($currFileName, $destinationFileName)
+    {
+        shell_exec("cp {$currFileName} {$destinationFileName}");
+        exec("chmod -R 777 {$destinationFileName}");
     }
 
     public static function trim($fileName)

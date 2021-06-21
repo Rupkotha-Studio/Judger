@@ -54,6 +54,7 @@ class Verdict
                 'description' => 'Internal Error',
             ],
         ];
+
         $status                      = response()->status;
         response()->status           = $verdictList[response()->status];
         response()->status['status'] = $status;
