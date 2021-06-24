@@ -36,76 +36,90 @@ class Checker
 
     public function runChecker()
     {
+
         if (request()->checker_type == "custom") {
             File::create(ff()->checker, request()->custom_checker);
-            return $this->runSpjChecker();
+            //compile checker file
+
+            $hasCompileFile = false;
+            if (isset(request()->checker_compile_file)) {
+                if (File::has("compile_file/" . request()->checker_compile_file)) {
+                    $hasCompileFile = true;
+                }
+            }
+            $checkerCompilerLog = "";
+            if (!$hasCompileFile) {
+                $checkerCompilerLog = $this->compileCheckerFile();
+                if (isset(request()->checker_compile_file)) {
+                    File::copy(ff()->checker_executable_file, "compile_file/" . request()->checker_compile_file);
+                }
+            } else {
+                if (request()->checker_compile_file) {
+                    File::copy("compile_file/" . request()->checker_compile_file, ff()->checker_executable_file);
+                }
+            }
+
+            $retData = [
+                'checkerLog'     => "Checker is not valid",
+                'checkerVerdict' => -1,
+                'checkerError'   => $checkerCompilerLog,
+            ];
+
+            if ($checkerCompilerLog == "") {
+                $retData = $this->runCheckerFile();
+            }
+            if (isset(request()->delete_checker_compile_file)) {
+                $deleteCompileFile = (bool) request()->delete_checker_compile_file;
+                if ($deleteCompileFile) {
+                    File::delete("compile_file/" . request()->checker_compile_file);
+                }
+            }
+
+            return $retData;
         } else {
             $dafaultCheckersList = [
-                'lcmp','yesno'
+                'lcmp', 'yesno',
             ];
-            $checkerPos = array_search(request()->default_checker,$dafaultCheckersList);
+            $checkerPos = array_search(request()->default_checker, $dafaultCheckersList);
             $checkerPos = $checkerPos ? $checkerPos : 0;
-            $checker = $dafaultCheckersList[$checkerPos];
-            return $this->runDefaultChecker($checker);
+            $checker    = $dafaultCheckersList[$checkerPos];
+            File::copy("../src/Sandbox/Checker/Lib/testlib/default_checker/{$checker}", ff()->checker_executable_file);
+            return $this->runCheckerFile();
         }
     }
 
-    public function runDefaultChecker($checker)
-    {
-        $checkerLogFile     = ff()->checker_log;
-        $outputFile         = ff()->output;
-        $expectedOutputFile = ff()->expected_output;
-        $compareFile        = ff()->compare;
-        $checkerFile        = ff()->bash_checker;
-        $input              = ff()->input;
-
-        //copy default checker file
-        shell_exec("cp ../src/Sandbox/Checker/Lib/testlib/default_checker/{$checker} temp");
-
-        $cmd = "./temp/{$checker} {$input} {$outputFile} {$expectedOutputFile} 2> $checkerLogFile";
-
-        shell_exec($cmd);
-        $checkerLog = file_get_contents($checkerLogFile);
-        return [
-            'checkerLog'     => $checkerLog,
-            'checkerVerdict' => $this->getCheckerVerdict($checkerLog),
-            'checkerError'   => "",
-        ];
-    }
-
-    public function runSpjChecker()
+    public function compileCheckerFile()
     {
         $this->createTestLib();
-
         $checkerFileName       = ff()->checker;
         $checkerErrorFile      = ff()->checker_error;
         $checkerExecutableFile = ff()->checker_executable_file;
 
         $cmd = "g++ --std=c++11 -lm $checkerFileName -o $checkerExecutableFile 2> $checkerErrorFile";
         shell_exec($cmd);
-        $checkerError = file_get_contents($checkerErrorFile);
+        $checkerCompileLog = file_get_contents($checkerErrorFile);
 
-        $ckeckerLog = "";
+        return trim($checkerCompileLog);
+    }
 
-        if (trim($checkerError) == "") {
+    public function runCheckerFile()
+    {
+        $checkerLogFile        = ff()->checker_log;
+        $outputFile            = ff()->output;
+        $expectedOutputFile    = ff()->expected_output;
+        $compareFile           = ff()->compare;
+        $checkerFile           = ff()->bash_checker;
+        $input                 = ff()->input;
+        $checkerExecutableFile = ff()->checker_executable_file;
 
-            $checkerLogFile = ff()->checker_log;
-
-            $input          = ff()->input;
-            $output         = ff()->output;
-            $expectedOutput = ff()->expected_output;
-
-            $cmd = "timeout 1s ./$checkerExecutableFile $input $output $expectedOutput 2> $checkerLogFile";
-            shell_exec($cmd);
-            $checkerLog = file_get_contents($checkerLogFile);
-        } else {
-            $checkerLog = "checker is not valid";
-        }
+        $cmd = "timeout 1s ./{$checkerExecutableFile} {$input} {$outputFile} {$expectedOutputFile} 2> $checkerLogFile";
+        shell_exec($cmd);
+        $checkerLog = file_get_contents($checkerLogFile);
 
         return [
             'checkerLog'     => $checkerLog,
             'checkerVerdict' => $this->getCheckerVerdict($checkerLog),
-            'checkerError'   => $checkerError,
+            'checkerError'   => "",
         ];
     }
 

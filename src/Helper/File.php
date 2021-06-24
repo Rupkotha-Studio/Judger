@@ -62,6 +62,7 @@ class File
 
     public function delete($fileName)
     {
+        if(!file_exists($fileName))return;
         unlink($fileName);
     }
 

@@ -60,6 +60,8 @@ function submitCode() {
         default_checker: $("#select_default_checker").val(),
         compile_file: "test_compile",
         delete_compile_file: 1,
+        checker_compile_file: "test_checker_compile",
+        delete_checker_compile_file: 1,
         api_type: "submission"
     }
     console.log(data1);

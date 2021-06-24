@@ -67,9 +67,9 @@ class Verdict
             if (preg_match("/[a-z]/i", strtolower(response()->memory))) {
                 $errors = explode("\n", response()->memory);
                 foreach ($errors as $key => $value) {
-                    if($value == "error: compilation failed"){
+                    if ($value == "error: compilation failed") {
                         response()->compiler_log = response()->memory;
-                        response()->status = "CE";
+                        response()->status       = "CE";
                         break;
                     }
                 }
@@ -82,13 +82,13 @@ class Verdict
         if (isset(response()->status)) {
             return;
         }
-        
+
         if (trim(response()->compiler_log) != "") {
-            response()->status = "RTE";
+            response()->status       = "RTE";
             response()->compiler_log = response()->memory;
         }
         if (preg_match("/[a-z]/i", strtolower(response()->memory))) {
-            response()->status = "RTE";
+            response()->status       = "RTE";
             response()->compiler_log = response()->memory;
         }
     }
@@ -132,7 +132,11 @@ class Verdict
         }
         $checkerData = $this->compareOutput();
 
-        response()->status     = $checkerData['checkerVerdict'] ? "AC" : "WA";
+        if ($checkerData['checkerVerdict'] == -1) {
+            response()->status = "IE";
+        } else {
+            response()->status = $checkerData['checkerVerdict'] ? "AC" : "WA";
+        }
         response()->checker_log = $checkerData['checkerLog'];
     }
 
