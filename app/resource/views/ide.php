@@ -96,7 +96,8 @@ $version  = $infoData['version'];
 					<option value="CPP">C++</option>
 					<option value="CPP11" selected="">C++11</option>
 					<option value="JAVA">Java</option>
-					<option value="PYTHON2">Python2</option>
+					<option value="PYTHON2">Python 2</option>
+					<option value="PYTHON3">Python 3</option>
 				</select>
 				<input type="number" name="" style="" class="" id="timeLimit" value="2" placeholder="Time Limit">
 				<input type="number" style="" name="" class="" id="memoryLimit" value="128000" placeholder="Memory Limit">

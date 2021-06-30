@@ -36,7 +36,8 @@ $includeFileList = [
                     'CPP11',
                     'C',
                     'JAVA',
-                    'PYTHON2'
+                    'PYTHON2',
+                    'PYTHON3',
                 ],
             ],
             'Sandbox',
