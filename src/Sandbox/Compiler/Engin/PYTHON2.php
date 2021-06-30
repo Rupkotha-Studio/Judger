@@ -7,6 +7,8 @@ class PYTHON2 extends CompilerEngin
        	File::create(ff()->python_program,request()->source_code);
        	$program = ff()->python_program;
 
+       	request()->program_file = $program;
+
         $this->run("python2 {$program}");
     }
 }

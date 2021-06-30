@@ -9,6 +9,8 @@ class C extends CompilerEngin
         $runFile        = ff()->c_run;
         $compileCommand = "gcc -lm {$sourceCode} -o {$runFile}";
 
+        request()->program_file = $sourceCode;
+
         $hasCompileFile = false;
         if (isset(request()->compile_file)) {
             if (File::has("compile_file/" . request()->compile_file)) {

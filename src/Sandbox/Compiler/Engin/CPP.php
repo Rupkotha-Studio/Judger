@@ -9,6 +9,8 @@ class CPP extends CompilerEngin
         $runFile        = ff()->cpp_run;
         $compileCommand = "g++ -lm {$sourceCode} -o {$runFile}";
 
+        request()->program_file = $sourceCode;
+
         $hasCompileFile = false;
         if (isset(request()->compile_file)) {
             if (File::has("compile_file/" . request()->compile_file)) {

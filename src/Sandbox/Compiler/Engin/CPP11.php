@@ -9,6 +9,8 @@ class CPP11 extends CompilerEngin
         $runFile        = ff()->cpp_run;
         $compileCommand = "g++ --std=c++11 -lm {$sourceCode} -o {$runFile}";
 
+        request()->program_file = $sourceCode;
+
         $hasCompileFile = false;
         if (isset(request()->compile_file)) {
             if (File::has("compile_file/" . request()->compile_file)) {

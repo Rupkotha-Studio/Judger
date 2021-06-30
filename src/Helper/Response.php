@@ -25,6 +25,16 @@ class Response
             'output' => "base64_encode",
             'memory' => "int",
         ];
+
+        if(isset(request()->program_file)){
+            if(trim($this->compiler_log) != ""){
+                $fileName = explode('.', request()->program_file);
+                $fileName = $fileName[0];
+                $this->compiler_log = str_replace($fileName, 'program', $this->compiler_log);
+                
+            }
+        }
+
         foreach ($castList as $key => $value) {
             if (isset($this->$key)) {
                 if ($value == "base64_encode") {
