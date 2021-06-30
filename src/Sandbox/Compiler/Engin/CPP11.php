@@ -27,6 +27,8 @@ class CPP11 extends CompilerEngin
             }
         }
 
+        if(File::has($runFile))response()->compiler_log = "";
+
         $this->run("$runFile");
 
         if (isset(request()->delete_compile_file)) {
