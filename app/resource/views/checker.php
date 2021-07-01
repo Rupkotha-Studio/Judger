@@ -1,14 +1,15 @@
 
-<script type="text/javascript" src="http://coderoj.com/style/lib/jquery/jquery.min.js"></script>
+
+<script type="text/javascript" src="<?php assest('lib/jquery.min.js') ?>"></script>
 <!-- Bootstrap Lib -->
 
 <link href="https://fonts.googleapis.com/css?family=Exo 2" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="http://coderoj.com/style/lib/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://coderoj.com/style/lib/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="<?php assest('lib/bootstrap.min.css') ?>">
+<link rel="stylesheet" href="http://localhost/project/Online-Judge/style/lib/font-awesome/css/font-awesome.css">
 
 <link rel="stylesheet" type="text/css" href="<?php assest('css/style.css') ?>">
-<script type="text/javascript" src="http://coderoj.com/style/lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<?php assest('lib/bootstrap.min.js') ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
 
 <?php

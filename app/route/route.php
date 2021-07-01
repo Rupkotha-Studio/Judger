@@ -7,4 +7,5 @@ $pageList = array(
     "checker"       => "checker",
     "checker_ifram" => "checker_ifram",
     "update"        => "update",
+    "reset"  		=> "reset"
 );
