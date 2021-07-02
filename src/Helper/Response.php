@@ -6,9 +6,9 @@
 class Response
 {
     public static $instance;
-    public $time       = 0;
-    public $memory     = 0;
-    public $checker_log = "";
+    public $time         = 0;
+    public $memory       = 0;
+    public $checker_log  = "";
     public $compiler_log = "";
 
     public static function getInstance()
@@ -26,12 +26,15 @@ class Response
             'memory' => "int",
         ];
 
-        if(isset(request()->program_file)){
-            if(trim($this->compiler_log) != ""){
-                $fileName = explode('.', request()->program_file);
-                $fileName = $fileName[0];
+        $this->checker_log  = $this->clearGarbaseValue($this->checker_log);
+        $this->compiler_log = $this->clearGarbaseValue($this->compiler_log);
+        $this->output       = $this->clearGarbaseValue($this->output);
+
+        if (isset(request()->program_file)) {
+            if (trim($this->compiler_log) != "") {
+                $fileName           = explode('.', request()->program_file);
+                $fileName           = $fileName[0];
                 $this->compiler_log = str_replace($fileName, 'program', $this->compiler_log);
-                
             }
         }
 
@@ -45,6 +48,11 @@ class Response
                 }
             }
         }
+    }
+
+    public function clearGarbaseValue($text)
+    {
+        return preg_replace('/[^(\x20-\x7F)]*/', '', $text);
     }
 
     public function json()
