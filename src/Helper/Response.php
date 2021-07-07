@@ -26,9 +26,9 @@ class Response
             'memory' => "int",
         ];
 
-        $this->checker_log  = $this->clearGarbaseValue($this->checker_log);
-        $this->compiler_log = $this->clearGarbaseValue($this->compiler_log);
-        $this->output       = $this->clearGarbaseValue($this->output);
+        //$this->checker_log  = $this->clearGarbaseValue($this->checker_log);
+        //$this->compiler_log = $this->clearGarbaseValue($this->compiler_log);
+        //$this->output       = $this->clearGarbaseValue($this->output);
 
         if (isset(request()->program_file)) {
             if (trim($this->compiler_log) != "") {
