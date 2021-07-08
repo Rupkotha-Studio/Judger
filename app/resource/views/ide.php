@@ -120,6 +120,10 @@ $version  = $infoData['version'];
 						<select id="select_default_checker" style="margin-top: 10px;margin-left: 15px;" class="">
 							<option value="lcmp">lcmp</option>
 							<option value="yesno">yesno</option>
+							<option value="fcmp">fcmp</option>
+							<option value="rcmp4">rcmp4</option>
+							<option value="rcmp6">rcmp6</option>
+							<option value="rcmp9">rcmp9</option>
 						</select>
 					</div>
 					<div id="custom_checker" style="display: none;">

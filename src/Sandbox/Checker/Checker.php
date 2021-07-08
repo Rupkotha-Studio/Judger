@@ -78,7 +78,7 @@ class Checker
             return $retData;
         } else {
             $dafaultCheckersList = [
-                'lcmp', 'yesno',
+                'lcmp', 'yesno','fcmp','rcmp4','rcmp6','rcmp9',
             ];
             $checkerPos = array_search(request()->default_checker, $dafaultCheckersList);
             $checkerPos = $checkerPos ? $checkerPos : 0;
