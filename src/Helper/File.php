@@ -35,11 +35,13 @@ class File
     {
         $file = $GLOBALS['file'];
         foreach ($file as $key => $value) {
-            $fileName   = new SplFileInfo($value);
-            $extension  = '.' . $fileName->getExtension();
-            $fileName   = $fileName->getBasename($extension);
-            $hsh        = "_" . rand();
-            $this->$key = $this->tempFileFolder . $fileName . $hsh . $extension;
+            $fileName     = new SplFileInfo($value);
+            $extension    = '.' . $fileName->getExtension();
+            $fileName     = $fileName->getBasename($extension);
+            $hsh          = "_" . rand();
+            $randomString = $this->createHash(6 + rand() % 10);
+            $fileName     = hash("sha256", $randomString . $fileName . $hsh);
+            $this->$key   = $this->tempFileFolder . $fileName . $extension;
         }
         $this->busy = 'busy.txt';
     }
@@ -62,7 +64,10 @@ class File
 
     public function delete($fileName)
     {
-        if(!file_exists($fileName))return;
+        if (!file_exists($fileName)) {
+            return;
+        }
+
         unlink($fileName);
     }
 

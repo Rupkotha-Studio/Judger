@@ -99,7 +99,7 @@ class Verdict
             return;
         }
         $outputFilesize = filesize(ff()->output);
-        if ($outputFilesize >= 8000000) {
+        if ($outputFilesize >= 20000000) {
             response()->status = "OLE";
         }
     }
@@ -127,6 +127,9 @@ class Verdict
 
     public function checkAc()
     {
+        File::create(ff()->expected_output, request()->expected_output);
+        File::create(ff()->compare);
+        
         if (isset(response()->status)) {
             return;
         }

@@ -22,8 +22,6 @@ class SandBox
         exec("mkdir -m 777 -p temp");
         File::create(ff()->input, request()->input);
         File::create(ff()->output);
-        File::create(ff()->expected_output, request()->expected_output);
-        File::create(ff()->compare);
         File::create(ff()->memory);
     }
 
