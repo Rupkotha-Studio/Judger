@@ -19,7 +19,6 @@ class SandBox
 
     public function makeMergeFile()
     {
-        exec("mkdir -m 777 -p temp");
         File::create(ff()->input, request()->input);
         File::create(ff()->output);
         File::create(ff()->memory);
@@ -27,7 +26,7 @@ class SandBox
 
     public function removeMergeFile()
     {
-        exec("rm -R temp");
+        exec("rm temp/*");
     }
 
     public function processData()
