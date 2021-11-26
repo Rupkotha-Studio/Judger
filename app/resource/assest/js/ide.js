@@ -46,10 +46,15 @@ function selectChecker(type){
     }
 }
 
+//use utf8_to_b64 function for Арбуз string not working btoa
+function utf8_to_b64( str ) {
+   return window.btoa(unescape(encodeURIComponent( str )));
+}
+
 function submitCode() {
 
     var data1 = {
-        source_code: btoa(sourceCodeEditor.getValue()),
+        source_code: utf8_to_b64(sourceCodeEditor.getValue()),
         input: btoa($("#input").val()),
         expected_output: btoa($("#expectedOutput").val()),
         language: $("#language").val(),
