@@ -35,6 +35,7 @@ $includeFileList = [
                     'CPP',
                     'CPP11',
                     'C',
+                    'CS',
                     'JAVA',
                     'PYTHON2',
                     'PYTHON3',

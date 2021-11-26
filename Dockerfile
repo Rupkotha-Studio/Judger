@@ -26,6 +26,7 @@ RUN apt install -y manpages-dev
 RUN apt install -y default-jre
 RUN apt install -y python2
 RUN apt install -y python3
+RUN apt install -y mono-complete
 
 #if time is not install then /usr/bin/time is not found when code compile
 RUN apt install -y time

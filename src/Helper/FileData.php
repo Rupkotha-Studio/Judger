@@ -20,6 +20,9 @@ $file = [
     'c_program'               => 'program.c',
     'c_run'                   => 'a.out',
 
+    'cs_program'               => 'program.cs',
+    'cs_run'                   => 'out.exe',
+
     //checker file
     'checker'                 => "checker.cpp",
     'checker_error'           => "checker_error.txt",
