@@ -6,10 +6,10 @@ class Verdict
     public function __construct()
     {
         $this->checkCompilationError();
-        $this->checkRunTimeError();
         $this->checkOutputLimit();
         $this->checkTimeLimit();
         $this->checkMemoryLimit();
+        $this->checkRunTimeError();
         $this->checkAc();
         $this->setVerdict();
     }

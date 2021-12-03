@@ -28,8 +28,8 @@ class CompilerEngin
 
         $metaData = $this->getMetaData();
 
-        response()->memory = $metaData['max-rss'];
-        response()->time   = $metaData['time'];
+        response()->memory = isset($metaData['max-rss']) ? $metaData['max-rss'] : 0;
+        response()->time   = isset($metaData['time']) ? $metaData['time'] : 0;
         /*
         - if divide by 0 then not get exit code and this time provide run time
         */
