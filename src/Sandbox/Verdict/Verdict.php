@@ -62,19 +62,7 @@ class Verdict
 
     public function checkCompilationError()
     {
-        if (strtoupper(request()->language) == "JAVA") {
-            //in java program the error area always show error: compilation failed if compiled failed
-            if (preg_match("/[a-z]/i", strtolower(response()->memory))) {
-                $errors = explode("\n", response()->memory);
-                foreach ($errors as $key => $value) {
-                    if ($value == "error: compilation failed") {
-                        response()->compiler_log = response()->memory;
-                        response()->status       = "CE";
-                        break;
-                    }
-                }
-            }
-        }
+        
     }
 
     public function checkRunTimeError()
@@ -83,13 +71,9 @@ class Verdict
             return;
         }
 
-        if (trim(response()->compiler_log) != "") {
+        if(response()->exitCode == 1){
             response()->status       = "RTE";
-            response()->compiler_log = response()->memory;
-        }
-        if (preg_match("/[a-z]/i", strtolower(response()->memory))) {
-            response()->status       = "RTE";
-            response()->compiler_log = response()->memory;
+            response()->compiler_log = File::read(ff()->error);
         }
     }
 
@@ -99,7 +83,7 @@ class Verdict
             return;
         }
         $outputFilesize = filesize(ff()->output);
-        if ($outputFilesize >= 20000000) {
+        if ($outputFilesize >= 30000000) {
             response()->status = "OLE";
         }
     }

@@ -1,12 +1,14 @@
 <?php
 
 $file = [
-    'input'                   => "input.txt",
+    'input'                   => "input",
     'expected_output'         => "expected_output.txt",
-    'output'                  => "output.txt",
-    'error'                   => "error.txt",
+    'output'                  => "output",
+    'error'                   => "error",
+    'meta'                    => "meta",
     'compare'                 => "compare.txt",
     'memory'                  => "memory.txt",
+    'busy'                    => "busy",
 
     'compiler_message'        => 'compiler_message.txt',
 
@@ -20,8 +22,8 @@ $file = [
     'c_program'               => 'program.c',
     'c_run'                   => 'a.out',
 
-    'cs_program'               => 'program.cs',
-    'cs_run'                   => 'out.exe',
+    'cs_program'              => 'program.cs',
+    'cs_run'                  => 'out.exe',
 
     //checker file
     'checker'                 => "checker.cpp",

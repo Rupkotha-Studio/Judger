@@ -9,6 +9,6 @@ class PYTHON3 extends CompilerEngin
 
        	request()->program_file = $program;
 
-        $this->run("python3 {$program}");
+        $this->run("$(which python3) program.py");
     }
 }

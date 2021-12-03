@@ -8,6 +8,7 @@ class Response
     public static $instance;
     public $time         = 0;
     public $memory       = 0;
+    public $exitCode     = 0;
     public $checker_log  = "";
     public $compiler_log = "";
 

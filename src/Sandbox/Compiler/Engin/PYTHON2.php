@@ -9,6 +9,6 @@ class PYTHON2 extends CompilerEngin
 
        	request()->program_file = $program;
 
-        $this->run("python2 {$program}");
+        $this->run("$(which python2) program.py");
     }
 }

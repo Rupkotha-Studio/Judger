@@ -20,8 +20,6 @@ class SandBox
     public function makeMergeFile()
     {
         File::create(ff()->input, request()->input);
-        File::create(ff()->output);
-        File::create(ff()->memory);
     }
 
     public function removeMergeFile()

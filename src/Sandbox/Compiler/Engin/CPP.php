@@ -31,7 +31,7 @@ class CPP extends CompilerEngin
 
         if(File::has($runFile))response()->compiler_log = "";
 
-        $this->run("$runFile");
+        $this->run("./a.out");
         
         if (isset(request()->delete_compile_file)) {
             $deleteCompileFile = (bool) request()->delete_compile_file;

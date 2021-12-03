@@ -31,7 +31,7 @@ class CS extends CompilerEngin
 
         if(File::has($runFile))response()->compiler_log = "";
 
-        $this->run("mono {$runFile}");
+        $this->run("$(which mono) out.exe");
 
         if (isset(request()->delete_compile_file)) {
             $deleteCompileFile = (bool) request()->delete_compile_file;

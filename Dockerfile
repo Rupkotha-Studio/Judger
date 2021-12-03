@@ -27,16 +27,23 @@ RUN apt install -y default-jre
 RUN apt install -y python2
 RUN apt install -y python3
 RUN apt install -y mono-complete
+RUN apt install -y default-jdk
 
 #if time is not install then /usr/bin/time is not found when code compile
 RUN apt install -y time
 
+#isolated environment create
+RUN apt install -y git
+RUN apt install -y libcap-dev
+RUN apt install -y make
+RUN git clone https://github.com/coderoj-dev/isolate
+RUN cd isolate && make isolate && make isolate install
+RUN isolate --version
 
 #set working directory to where Apache serves files
 WORKDIR /var/www/html
 RUN rm index.html
 COPY . /var/www/html
-RUN chmod o-rw /var/www/html
 RUN chmod -R 777 /var/www/html/api/
 RUN mkdir -m 777 /var/www/html/api/temp
 RUN mkdir -m 777 /var/www/html/api/compile_file

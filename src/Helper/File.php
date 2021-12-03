@@ -35,15 +35,8 @@ class File
     {
         $file = $GLOBALS['file'];
         foreach ($file as $key => $value) {
-            $fileName     = new SplFileInfo($value);
-            $extension    = '.' . $fileName->getExtension();
-            $fileName     = $fileName->getBasename($extension);
-            $hsh          = "_" . rand();
-            $randomString = $this->createHash(6 + rand() % 10);
-            $fileName     = hash("sha256", $randomString . $fileName . $hsh);
-            $this->$key   = $this->tempFileFolder . $fileName . $extension;
+            $this->$key   = $this->tempFileFolder . $value;
         }
-        $this->busy = 'busy.txt';
     }
 
     public static function createInstance()
@@ -62,7 +55,7 @@ class File
         exec("chmod -R 777 " . $fileName);
     }
 
-    public function delete($fileName)
+    public static function delete($fileName)
     {
         if (!file_exists($fileName)) {
             return;
@@ -78,14 +71,14 @@ class File
         }
     }
 
-    public function has($fileName)
+    public static function has($fileName)
     {
         return file_exists($fileName);
     }
 
     public static function read($fileName)
     {
-        return file_get_contents($fileName);
+        return self::has($fileName) ? file_get_contents($fileName) : "";
     }
 
     public static function copy($currFileName, $destinationFileName)
