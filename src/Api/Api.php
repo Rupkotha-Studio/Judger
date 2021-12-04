@@ -8,7 +8,6 @@ class Api
     ];
     public function __construct()
     {
-        
         if (File::has(ff()->busy)) {
            new ErrorEx(['Compiler Already Busy Another Process'], 409);
         }
