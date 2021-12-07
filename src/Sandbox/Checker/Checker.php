@@ -83,7 +83,7 @@ class Checker
             $checkerPos = array_search(request()->default_checker, $dafaultCheckersList);
             $checkerPos = $checkerPos ? $checkerPos : 0;
             $checker    = $dafaultCheckersList[$checkerPos];
-            File::copy("../src/Sandbox/Checker/Lib/testlib/default_checker/{$checker}", ff()->checker_executable_file);
+            File::copy("../../src/Sandbox/Checker/Lib/testlib/default_checker/{$checker}", ff()->checker_executable_file);
             return $this->runCheckerFile();
         }
     }
@@ -125,7 +125,7 @@ class Checker
 
     public function createTestLib()
     {
-        shell_exec("cp ../src/Sandbox/Checker/Lib/testlib/testlib.h temp");
+        shell_exec("cp ../../src/Sandbox/Checker/Lib/testlib/testlib.h testlib.h");
     }
 
     public function getCheckerVerdict($checkerLog)

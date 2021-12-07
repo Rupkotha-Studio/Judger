@@ -3,12 +3,14 @@
 class File
 {
     public static $instance;
-    private $tempFileFolder = "temp/";
+    public $judgePath    = "temp/";
+    public $judgeBoxPath = "temp/box/";
 
     public function __construct()
     {
         $this->storeFileData();
         $this->createHash();
+        $this->judgePath = (isset(request()->judge_path) ? request()->judge_path : $this->createHash(10))."/";
     }
 
     public function createHash($len = 6)
@@ -35,7 +37,7 @@ class File
     {
         $file = $GLOBALS['file'];
         foreach ($file as $key => $value) {
-            $this->$key   = $this->tempFileFolder . $value;
+            $this->$key = $value;
         }
     }
 
@@ -47,12 +49,28 @@ class File
         return self::$instance;
     }
 
+    public static function size($fileName)
+    {
+        return self::has($fileName) ? filesize($fileName) : 0;
+    }
+
     public static function create($fileName, $fileVal = "")
     {
+        self::createDir($fileName);
+
         $file = fopen($fileName, "w+");
         fwrite($file, $fileVal);
         fclose($file);
         exec("chmod -R 777 " . $fileName);
+    }
+
+    public static function createDir($dirLocation)
+    {
+        if (!file_exists(dirname($dirLocation))) {
+            exec("mkdir -m 777 " . dirname($dirLocation));
+            return true;
+        }
+        return false;
     }
 
     public static function delete($fileName)

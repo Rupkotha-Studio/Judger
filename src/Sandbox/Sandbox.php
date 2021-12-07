@@ -10,28 +10,36 @@ class SandBox
 
     public function compile()
     {
-        $this->makeMergeFile();
+        $this->makeJudgeDir();
 
         new Compiler();
         $this->processData();
-        $this->removeMergeFile();
+        $this->removeJudgeDir();
     }
 
-    public function makeMergeFile()
+    public function makeJudgeDir()
     {
-        File::create(ff()->input, request()->input);
+        exec("mkdir -m 777 " . ff()->judgePath);
+        chdir(ff()->judgePath);
+        exec("mkdir -m 777 box");
+        exec("mkdir -m 777 checker");
     }
 
-    public function removeMergeFile()
+    public function removeJudgeDir()
     {
-        exec("rm temp/*");
+        request()->clear_judge_path = isset(request()->clear_judge_path) ? request()->clear_judge_path : 1;
+        if (request()->clear_judge_path == 1) {
+            exec("rm -rf " . ff()->judgePath);
+        } else {
+            exec("rm " . ff()->judgePath."*");
+        }
     }
 
     public function processData()
     {
         new Verdict();
 
-        response()->output     = Lib::compressString(File::read(ff()->output), 3000);
-
+        response()->output = Lib::compressString(File::read(ff()->output), 3000);
+        chdir("..");
     }
 }

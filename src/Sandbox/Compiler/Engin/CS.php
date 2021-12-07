@@ -2,42 +2,27 @@
 
 class CS extends CompilerEngin
 {
+    
+
     public function __construct()
     {
-        File::create(ff()->cs_program, request()->source_code);
-        $sourceCode     = ff()->cs_program;
-        $runFile        = ff()->cs_run;
-        $compileCommand = "mcs -out:{$runFile} {$sourceCode}";
+        /*
+        - javac program.java
+         */
+        $this->compile("mcs -out:{$this->getBinaryFile()} " . request()->source_file_name);
 
-        request()->program_file = $sourceCode;
+        /*
+        - java Main/Class Name
+         */
+        $path       = trim(shell_exec("realpath $(which mono)"));
+        $binaryFile = $this->getBinaryFile();
+        $executeCmd = "$path {$binaryFile}";
 
-        $hasCompileFile = false;
-        if (isset(request()->compile_file)) {
-            if (File::has("compile_file/" . request()->compile_file)) {
-                $hasCompileFile = true;
-            }
-        }
+        $this->run($executeCmd);
+    }
 
-        if (!$hasCompileFile) {
-            $this->compile($compileCommand);
-            if (isset(request()->compile_file)) {
-                File::copy($runFile, "compile_file/" . request()->compile_file);
-            }
-        } else {
-            if (request()->compile_file) {
-                File::copy("compile_file/" . request()->compile_file, $runFile);
-            }
-        }
-
-        if(File::has($runFile))response()->compiler_log = "";
-
-        $this->run("$(which mono) out.exe");
-
-        if (isset(request()->delete_compile_file)) {
-            $deleteCompileFile = (bool) request()->delete_compile_file;
-            if ($deleteCompileFile) {
-                File::delete("compile_file/" . request()->compile_file);
-            }
-        }
+    public function getBinaryFile()
+    {
+        return "out.exe";
     }
 }

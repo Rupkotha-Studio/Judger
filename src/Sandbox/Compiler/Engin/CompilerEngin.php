@@ -5,8 +5,17 @@ class CompilerEngin
 
     public function compile($cmd = null)
     {
+        if (count(glob("box/*")) == 1) {
+            return;
+        }
+
         shell_exec("{$cmd} 2> " . ff()->compiler_message);
         response()->compiler_log = trim(File::read(ff()->compiler_message));
+
+        $binaryFile = $this->getBinaryFile();
+        exec("cp {$binaryFile} box");
+
+        response()->compiler_log = File::has($binaryFile) ? "" : response()->compiler_log;
 
         File::delete(ff()->compiler_message);
     }
@@ -18,12 +27,9 @@ class CompilerEngin
             return;
         }
 
-        $input     = ff()->input;
-        $memory    = ff()->memory;
-        $output    = ff()->output;
         $timeLimit = request()->time_limit;
 
-        $cmd = "bash run.sh {$timeLimit} {$cmd}";
+        $cmd = "bash ../run.sh {$timeLimit} {$cmd}";
         echo shell_exec($cmd);
 
         $metaData = $this->getMetaData();
@@ -32,13 +38,13 @@ class CompilerEngin
         response()->time   = isset($metaData['time']) ? $metaData['time'] : 0;
         /*
         - if divide by 0 then not get exit code and this time provide run time
-        */
-        response()->exitCode = isset($metaData['exitcode'])? $metaData['exitcode'] : 1;
+         */
+        response()->exitCode = isset($metaData['exitcode']) ? $metaData['exitcode'] : 1;
     }
-    
+
     public function getMetaData()
     {
-        $meta = File::read(ff()->meta);
+        $meta     = File::read(ff()->meta);
         $meta     = explode(PHP_EOL, $meta);
         $metaData = [];
         foreach ($meta as $key => $value) {

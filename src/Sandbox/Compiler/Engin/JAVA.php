@@ -4,27 +4,25 @@ class JAVA extends CompilerEngin
 {
     public function __construct()
     {
-        $sourceCode = ff()->java_program;
-        File::create($sourceCode, request()->source_code);
+        /*
+        - javac program.java
+         */
+        $this->compile("javac " . request()->source_file_name);
 
-        $this->compileCmd = "javac temp/program.java";
-
-        $this->compile($this->compileCmd);
-
-        $binaryFile = $this->getBinaryFileName();
-
-        if($binaryFile != "")response()->compiler_log = "";
-
+        /*
+        - java Main/Class Name
+         */
         $path       = trim(shell_exec("realpath $(which java)"));
+        $binaryFile = basename($this->getBinaryFile(), ".class");
         $executeCmd = "$path {$binaryFile}";
 
         $this->run($executeCmd);
     }
 
-    public function getBinaryFileName()
+    public function getBinaryFile()
     {
-        $classFile = trim(shell_exec('find temp -name "*.class"'));
-        $binaryFile = $classFile != "" ? pathinfo($classFile)['filename'] : "";
+        $classFiles = glob("*.class");
+        $binaryFile = (count($classFiles) > 0) ? basename($classFiles[0]) : "";
         return $binaryFile;
     }
 }

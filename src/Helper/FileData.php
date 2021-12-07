@@ -20,7 +20,7 @@ $file = [
     'python_program'          => 'program.py',
 
     'c_program'               => 'program.c',
-    'c_run'                   => 'a.out',
+    'c_run'                   => 'box/a.out',
 
     'cs_program'              => 'program.cs',
     'cs_run'                  => 'out.exe',

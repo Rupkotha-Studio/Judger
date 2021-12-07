@@ -82,7 +82,7 @@ class Verdict
         if (isset(response()->status)) {
             return;
         }
-        $outputFilesize = filesize(ff()->output);
+        $outputFilesize = File::size(ff()->output);
         if ($outputFilesize >= 30000000) {
             response()->status = "OLE";
         }
