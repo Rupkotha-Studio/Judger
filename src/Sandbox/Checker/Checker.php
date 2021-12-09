@@ -41,22 +41,12 @@ class Checker
             File::create(ff()->checker, request()->custom_checker);
             //compile checker file
 
-            $hasCompileFile = false;
-            if (isset(request()->checker_compile_file)) {
-                if (File::has("compile_file/" . request()->checker_compile_file)) {
-                    $hasCompileFile = true;
-                }
-            }
+            
             $checkerCompilerLog = "";
-            if (!$hasCompileFile) {
+
+            if (count(glob("checker/*")) != 1) {
                 $checkerCompilerLog = $this->compileCheckerFile();
-                if (isset(request()->checker_compile_file)) {
-                    File::copy(ff()->checker_executable_file, "compile_file/" . request()->checker_compile_file);
-                }
-            } else {
-                if (request()->checker_compile_file) {
-                    File::copy("compile_file/" . request()->checker_compile_file, ff()->checker_executable_file);
-                }
+                $checkerCompilerLog = File::has(ff()->checker_executable_file) ? "": $checkerCompilerLog;
             }
 
             $retData = [
@@ -67,12 +57,6 @@ class Checker
 
             if ($checkerCompilerLog == "") {
                 $retData = $this->runCheckerFile();
-            }
-            if (isset(request()->delete_checker_compile_file)) {
-                $deleteCompileFile = (bool) request()->delete_checker_compile_file;
-                if ($deleteCompileFile) {
-                    File::delete("compile_file/" . request()->checker_compile_file);
-                }
             }
 
             return $retData;
