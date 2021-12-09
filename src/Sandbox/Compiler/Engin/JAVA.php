@@ -64,7 +64,7 @@ class JAVA extends CompilerEngin
 
     public function getBinaryFile()
     {
-        $classFiles = glob("*.class");
+        $classFiles = array_merge(glob("*.class"), glob("box/*.class"));
         $binaryFile = (count($classFiles) > 0) ? basename($classFiles[0]) : "";
         return $binaryFile;
     }
