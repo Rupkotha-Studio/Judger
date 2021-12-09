@@ -8,9 +8,6 @@ class Api
     ];
     public function __construct()
     {
-        request()->judge_path = "hamza";
-        //request()->clear_judge_path = ;
-
         if (File::has(ff()->busy)) {
            new ErrorEx(['Compiler Already Busy Another Process'], 409);
         }

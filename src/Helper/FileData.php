@@ -2,7 +2,7 @@
 
 $file = [
     'input'                   => "input",
-    'expected_output'         => "expected_output.txt",
+    'expected_output'         => "answare",
     'output'                  => "output",
     'error'                   => "error",
     'meta'                    => "meta",

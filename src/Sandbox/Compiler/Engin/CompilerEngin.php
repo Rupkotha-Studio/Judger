@@ -28,8 +28,10 @@ class CompilerEngin
         }
 
         $timeLimit = request()->time_limit;
+        $extraTime = 0.2;
+        $wallTime = $timeLimit + $extraTime + 0.1;
 
-        $cmd = "bash ../run.sh {$timeLimit} {$cmd}";
+        $cmd = "bash ../run.sh {$timeLimit} {$extraTime} {$wallTime} {$cmd}";
         echo shell_exec($cmd);
 
         $metaData = $this->getMetaData();
@@ -40,6 +42,12 @@ class CompilerEngin
         - if divide by 0 then not get exit code and this time provide run time
          */
         response()->exitCode = isset($metaData['exitcode']) ? $metaData['exitcode'] : 1;
+
+        if(isset($metaData['status']) && $metaData['status'] == 'TO' && $timeLimit > response()->time){
+            response()->time = $wallTime;
+        }
+
+        //print_r($metaData);
     }
 
     public function getMetaData()

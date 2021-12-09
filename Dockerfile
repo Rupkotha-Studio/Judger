@@ -45,5 +45,3 @@ RUN rm index.html
 COPY . /var/www/html
 
 RUN chmod -R 777 /var/www/html/api/
-RUN mkdir -m 777 /var/www/html/api/temp
-RUN mkdir -m 777 /var/www/html/api/compile_file
