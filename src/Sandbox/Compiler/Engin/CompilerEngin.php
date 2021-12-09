@@ -18,6 +18,7 @@ class CompilerEngin
         response()->compiler_log = File::has($binaryFile) ? "" : response()->compiler_log;
 
         File::delete(ff()->compiler_message);
+        return response()->compiler_log == ""? 1 : 0;
     }
 
     public function run($cmd = null)
