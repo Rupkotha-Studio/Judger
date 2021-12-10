@@ -1,7 +1,7 @@
 ## Judger
 ![Judger Wallpaper](https://github.com/coderoj-dev/Judger/blob/master/.github/home.png?raw=true)
 
-![screenshot](https://github.com/coderoj-dev/Judger/blob/master/.github/editor.png?raw=true) Ide | ![screenshot](https://github.com/coderoj-dev/Judger/blob/master/.github/editor.png?raw=true) Checker IDE |
+![screenshot](https://github.com/coderoj-dev/Judger/blob/master/.github/ide.png?raw=true) Ide | ![screenshot](https://github.com/coderoj-dev/Judger/blob/master/.github/checker.png?raw=true) Checker IDE |
 |-|-|
 
 ## Introduction
