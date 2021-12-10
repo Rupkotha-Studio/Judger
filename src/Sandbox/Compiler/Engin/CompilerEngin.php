@@ -43,9 +43,9 @@ class CompilerEngin
         - if divide by 0 then not get exit code and this time provide run time
          */
         response()->exitCode = isset($metaData['exitcode']) ? $metaData['exitcode'] : 1;
-
-        if(isset($metaData['status']) && $metaData['status'] == 'TO' && $timeLimit > response()->time){
-            response()->time = $wallTime;
+        if(isset($metaData['status']) && $metaData['status'] == 'TO'){
+            $nWallTime = isset($metaData['time-wall']) ? $metaData['time-wall'] : request()->time;
+            response()->time = sprintf('%0.3f', $nWallTime);
         }
 
         //print_r($metaData);

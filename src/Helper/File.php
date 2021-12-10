@@ -10,7 +10,7 @@ class File
     {
         $this->storeFileData();
         $this->createHash();
-        $this->judgePath = (isset(request()->judge_path) ? request()->judge_path : $this->createHash(10))."/";
+        $this->judgePath = (isset(request()->judge_path) ? request()->judge_path : $this->createHash(20))."/";
     }
 
     public function createHash($len = 6)

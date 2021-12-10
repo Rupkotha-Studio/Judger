@@ -21,8 +21,16 @@ class SandBox
     {
         exec("mkdir -m 777 " . ff()->judgePath);
         chdir(ff()->judgePath);
+        $this->busyFlag();
         exec("mkdir -m 777 box");
         exec("mkdir -m 777 checker");
+    }
+
+    public function busyFlag(){
+        if (File::has(ff()->busy)) {
+           new ErrorEx(['Compiler Already Busy Another Process'], 409);
+        }
+        File::create(ff()->busy, rand());
     }
 
     public function removeJudgeDir()
