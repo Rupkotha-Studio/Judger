@@ -93,8 +93,9 @@ $version  = $infoData['version'];
 			<div class="col-md-9">
 				<select onchange="changeLanguage()" style="" id="language" class="">
 					<option value="C">C</option>
-					<option value="CPP">C++</option>
 					<option value="CPP11" selected="">C++11</option>
+					<option value="CPP14" selected="">C++14</option>
+					<option value="CPP17" selected="">C++17</option>
 					<option value="JAVA">Java</option>
 					<option value="PYTHON2">Python 2</option>
 					<option value="PYTHON3">Python 3</option>

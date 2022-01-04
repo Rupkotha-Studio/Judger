@@ -3,7 +3,7 @@
 class Compiler
 {
     private $compilerList = [
-        'C', 'CPP', 'CS', 'CPP11', 'JAVA', 'PYTHON2', 'PYTHON3',
+        'C', 'CPP', 'CS', 'CPP11', 'CPP14','CPP17','JAVA', 'PYTHON2', 'PYTHON3',
     ];
     public function __construct()
     {
@@ -27,8 +27,9 @@ class Compiler
     {
         $fileExtensions = [
             'C'       => 'c',
-            'CPP'     => 'cpp',
             'CPP11'   => 'cpp',
+            'CPP14'   => 'cpp',
+            'CPP17'   => 'cpp',
             'CS'      => 'cs',
             'JAVA'    => 'java',
             'PYTHON2' => 'py',
